@@ -1,13 +1,6 @@
 /* jshint expr:true */
 
 'use strict';
-/*
-process.env.DBNAME = 'nodemon-test';
-var expect = require('chai').expect;
-var Mongo = require('mongodb');
-var User;
-var bob;
-*/
 
 process.env.DBNAME = 'nodemon-test';
 var expect = require('chai').expect;
