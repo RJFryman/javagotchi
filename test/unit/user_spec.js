@@ -1,13 +1,6 @@
 /* jshint expr:true */
 
 'use strict';
-/*
-process.env.DBNAME = 'nodemon-test';
-var expect = require('chai').expect;
-var Mongo = require('mongodb');
-var User;
-var bob;
-*/
 
 process.env.DBNAME = 'nodemon-test';
 var expect = require('chai').expect;
@@ -37,7 +30,7 @@ describe('User', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile2));
       global.nss.db.dropDatabase(function(err, result){
-        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0', pic: '/data/code/projects/javagotchi/test/fixtures/testfile2-copy.jpg'});
+        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0', pic: '/data/code/nodemon/test/fixtures/testfile2-copy.jpg'});
         u1.register(function(){
           done();
         });
@@ -47,7 +40,7 @@ describe('User', function(){
 
   describe('new', function(){
     it('should create a new User object', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
       expect(u1.email).to.equal('sam@nomail.com');
       expect(u1.password).to.equal('1234');
       expect(u1.nodeBucks).to.equal(5);
@@ -58,7 +51,7 @@ describe('User', function(){
 
   describe('register', function(){
     it('should register user', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
       u1.register(function(){
         expect(u1.email).to.equal('sam@nomail.com');
         expect(u1.password).to.have.length(60);
@@ -70,8 +63,8 @@ describe('User', function(){
     });
 
     it('should not register a user to the database for duplicate email', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5'});
-      var u2 = new User({name: 'Sam', email:'sami1@nomail.com', password:'1234', nodeBucks:'5'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
+      var u2 = new User({name: 'Sam', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
       u1.register(function(){
         u2.register(function(){
           expect(u1.password).to.have.length(60);
@@ -85,7 +78,7 @@ describe('User', function(){
 
   describe('#setHome', function(){
     it('should set the home coordinates of the user', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
       u1.register(function(){
         u1.setHome('0', '0', function(){
           expect(u1.home).to.deep.equal([0, 0]);
@@ -99,7 +92,7 @@ describe('User', function(){
 
   describe('.findById', function(){
     it('should find a user by id', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', pic: '/data/code/projects/javagotchi/test/fixtures/testfile-copy.jpg'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', pic: '/data/code/nodemon/test/fixtures/testfile-copy.jpg', lat: '0', lng:'0'});
       u1.register(function(){
         User.findById(u1._id.toString(), function(record){
           expect(u1.pic).to.equal('/img/users/testfile-copy.jpg');
@@ -136,7 +129,7 @@ describe('User', function(){
 
   describe('.findAll', function(){
     it('should all users in the db', function(done){
-      var u2 = new User({name: 'Sam', email:'adam@nomail.com', password:'1234', nodeBucks:'5'});
+      var u2 = new User({name: 'Sam', email:'adam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
       u2.register(function(){
         User.findAll(function(users){
           expect(users.length).to.equal(2);
@@ -148,7 +141,7 @@ describe('User', function(){
 
   describe('.findByName', function(){
     it('should find users by name in the db', function(done){
-      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', nodeBucks:'5'});
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
       u2.register(function(){
         User.findByName('Adam', function(users){
           expect(users.name).to.equal('Adam');

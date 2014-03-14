@@ -21,6 +21,8 @@ function load(app, fn){
   app.post('/register', d, users.create);
   app.get('/login', d, users.login);
   app.post('/login', d, users.authenticate);
+  app.get('/users/:id', d, users.show);
+  app.post('/logout', d, users.logout);
   console.log('Routes Loaded');
   fn();
 }
