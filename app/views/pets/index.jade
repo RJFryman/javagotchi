@@ -18,7 +18,9 @@ block content
         tbody
           each pet in pets
             tr
-              td= pet.image
+              td
+                a(href='/pets/'+pet._id.toString())
+                  img(src=pet.image)
               td= pet.status
               td= pet.name
               td= pet.species
