@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 var app = require('../../app/app');
 //var expect = require('chai').expect;
 var User, Activity;
-var u1, u2, u3, a1;
+var u1, u2, u3, a1, cookie;
 
 describe('Activities', function(){
   before(function(done){
@@ -41,7 +41,14 @@ describe('Activities', function(){
             u3.register(function(){
               a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
               a1.insert(function(err){
-                done();
+                request(app)
+                .post('/login')
+                .field('email', 'adam@nomail.com')
+                .field('password', '1234')
+                .end(function(err, res){
+                  cookie = res.headers['set-cookie'];
+                  done();
+                });
               });
             });
           });
@@ -71,6 +78,44 @@ describe('Activities', function(){
       request(app)
       .get('/activities/' + a1._id.toString())
       .expect(200, done);
+    });
+  });
+
+//--------------------- AUTHORIZED -----------------------//
+
+  describe('POST /activities', function(){
+    it('should create an activity and redirect to the activities show page', function(done){
+      request(app)
+      .post('/activities')
+      .set('cookie', cookie)
+      .field('name', 'Skydiving with my wizard friend')
+      .field('userId', u1._id.toString())
+      .field('date', '2014-03-15')
+      .field('category', 'socializing')
+      .field('description', 'Had a freaking blast')
+      .field('nodemonId', '12345678900987654321abcd')
+      .expect(302, done);
+    });
+  });
+
+  describe('DEL /activities/:id', function(){
+    it('should delete an activity', function(done){
+      var id = a1._id.toString();
+      request(app)
+      .del('/activities/' + id)
+      .set('cookie', cookie)
+      .expect(302, done);
+    });
+  });
+
+  describe('PUT /activities/:id', function(){
+    it('should update an activity', function(done){
+      var id = a1._id.toString();
+      request(app)
+      .put('/activities/' + id)
+      .set('cookie', cookie)
+      .field('name', 'Falling Out Of An Airplane')
+      .expect(302, done);
     });
   });
 

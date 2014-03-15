@@ -25,6 +25,9 @@ function load(app, fn){
   app.get('/activities', d, activities.index);
   app.get('/activities/new', d, activities.new);
   app.get('/activities/:id', d, activities.show);
+  app.post('/activities', d, activities.create);
+  app.del('/activities/:id', d, activities.destroy);
+  app.put('/activities/:id', d, activities.update);
   console.log('Routes Loaded');
   fn();
 }

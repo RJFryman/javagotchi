@@ -59,12 +59,39 @@ describe('Activity', function(){
     });
   });
 
-  describe('insert', function(){
+  describe('#insert', function(){
     it('should insert an activity into the db', function(done){
       var a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
       a1.insert(function(err){
         expect(a1._id.toString()).to.have.length(24);
         done();
+      });
+    });
+  });
+
+  describe('.deleteById', function(){
+    it('should delete an activity in the db', function(done){
+      var a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
+      a1.insert(function(){
+        var id = a1._id.toString();
+        Activity.deleteById(id, function(count){
+          expect(count).to.equal(1);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('#update', function(){
+    it('should update an activity in the db', function(done){
+      var a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
+      a1.insert(function(){
+        a1.name = 'Swimming in the Deep Blue Sea';
+        a1.update(function(count){
+          expect(count).to.equal(1);
+          expect(a1.name).to.equal('Swimming in the Deep Blue Sea');
+          done();
+        });
       });
     });
   });
