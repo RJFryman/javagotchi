@@ -3,3 +3,22 @@ extends ../shared/template
 block content
   h1= title
 
+  form
+    fieldset
+      legend Add An Activity
+      label Title
+      input(type='text', name='name', autofocus='true', placeholder='Walk with my Dragon')
+      label Date
+      input(type='date', name='date')
+      label Category
+      select
+        option Swimming
+        option Walking
+        option Running
+        option Socializing
+        option Hiking
+      label Description
+      textarea#description(name='description', placeholder='Had a totally awesome time')
+      input(type='hidden', name='userId')
+      input(type='hidden', name='nodemonId')
+      button.radius.small Add Activity
