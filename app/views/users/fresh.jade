@@ -6,9 +6,15 @@ block content
       form(method='post', action='/register')
         fieldset
           legend=title
+          label Name
+          input(type='text', name='name', autofocus=true, required=true)
           label Email
-          input(type='email', name='email', autofocus=true)
+          input(type='email', name='email', required=true)
           label Password
-          input(type='password', name='password')
+          input(type='password', name='password', required=true)
+          label Address
+          input(type='text', name='address', required=true)
+          label Profile Picture
+          input(type='file', name='pic')
           button.radius.small Create
     .small-8.columns

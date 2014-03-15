@@ -140,14 +140,12 @@ describe('user', function(){
       .expect(302, done);
     });
   });
-/* >>>> this function is dependant on the functions from Pet and Activity class .. 
- * will rerun after merge >>>>>>>
+
   describe('GET /users/:id', function(){
     it('should redirect to the show page', function(done){
       request(app)
       .get('/users/'+ inUser._id)
-      .expect(302, done);
+      .expect(200, done);
     });
   });
-  */
 });

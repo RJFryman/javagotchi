@@ -1,13 +1,14 @@
 'use strict';
 
 module.exports = Activity;
+var _ = require('lodash');
 //var users = global.nss.db.collection('users');
 var activities = global.nss.db.collection('activities');
 var Mongo = require('mongodb');
 
 function Activity(activity){
   this.name = activity.name;
-  this.completed = false;
+  this.completed = activity.completed ? activity.completed : false;
   this.userId = new Mongo.ObjectID(activity.userId);
   this.date = new Date(activity.date);
   this.category = activity.category;
@@ -18,6 +19,19 @@ function Activity(activity){
 Activity.prototype.insert = function(fn){
   activities.insert(this, function(err, record){
     fn(err);
+  });
+};
+
+Activity.deleteById = function(id, fn){
+  var _id = Mongo.ObjectID(id);
+  activities.remove({_id:_id}, function(err, count){
+    fn(count);
+  });
+};
+
+Activity.prototype.update = function(fn){
+  activities.update({_id:this._id}, this, function(err, count){
+    fn(count);
   });
 };
 
@@ -45,7 +59,7 @@ Activity.findByCategory = function(category, fn){
 Activity.findById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   activities.findOne({_id:_id}, function(err, record){
-    fn(record);
+    fn(_.extend(record, Activity.prototype));
   });
 };
 
