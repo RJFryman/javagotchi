@@ -14,7 +14,7 @@ html(class='no-js', lang='en')
     nav.top-bar
       ul.title-area
         li.name
-          h1: a(href="/") The Title
+          h1: a(href="/")= title
         li.toggle-topbar.menu-icon
           a(href="#") Menu
 
@@ -22,6 +22,10 @@ html(class='no-js', lang='en')
         ul.left
         ul.right
           li: a(href="/") Home
+          li.divider
+          li: a(href="/pets") Pets
+          li.divider
+          li: a(href="/pets/new") New Pet
           li.divider
           li: a(href="/register") Register
           li.divider
