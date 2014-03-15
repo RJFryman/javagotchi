@@ -3,7 +3,7 @@ extends ../shared/template
 block content
   .row
     .small-4.columns
-      form(method='post', action='/register')
+      form(method='post', action='/register', enctype='multipart/form-data')
         fieldset
           legend=title
           label Name
@@ -14,7 +14,12 @@ block content
           input(type='password', name='password', required=true)
           label Address
           input(type='text', name='address', required=true)
+          input(type='hidden', name='lat')
+          input(type='hidden', name='lng')
           label Profile Picture
           input(type='file', name='pic')
-          button.radius.small Create
+          button.radius.small#register Create
     .small-8.columns
+
+block script
+  script(src='/js/source/address.js')
