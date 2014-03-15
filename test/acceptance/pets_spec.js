@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var request = require('supertest');
 var app = require('../../app/app');
 var User, Pet;
-var u1, p1;
+var u1, p1, cookie;
 
 describe('Pet', function(){
   before(function(done){
@@ -24,7 +24,14 @@ describe('Pet', function(){
       u1.register(function(){
         p1 = new Pet({name:'Spyro', species:'Dragon', class:'Wizard', userId:u1._id.toString()});
         p1.insert(function(){
-          done();
+          request(app)
+          .post('/login')
+          .field('email', 'adam@nomail.com')
+          .field('password', '1234')
+          .end(function(err, res){
+            cookie = res.headers['set-cookie'];
+            done();
+          });
         });
       });
     });
@@ -96,7 +103,7 @@ describe('Pet', function(){
     });
   });
 
-  
+
 
 });
 
