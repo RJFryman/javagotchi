@@ -4,11 +4,11 @@ var Pet = require('../models/pet');
 var User = require('../models/user');
 
 exports.index = function(req, res){
-  res.render('/pets/index', {title:'Pets'});
+  res.render('pets/index', {title:'Pets'});
 };
 
 exports.new = function(req, res){
-  res.render('/pets/new', {title:'New Pet'});
+  res.render('pets/new', {title:'New Pet'});
 };
 
 exports.create = function(req, res){
@@ -22,7 +22,7 @@ exports.create = function(req, res){
 exports.show = function(req, res){
   Pet.findById(req.params.id, function(pet){
     User.findById(pet.userId.toString(), function(owner){
-      res.render('/pets/show', {pet:pet, owner:owner});
+      res.render('pets/show', {pet:pet, owner:owner});
     });
   });
 };
