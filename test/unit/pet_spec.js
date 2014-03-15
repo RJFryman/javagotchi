@@ -121,6 +121,18 @@ describe('Pet', function(){
     });
   });
 
+  describe('deleteById', function(){
+    it('should delete a pet', function(done){
+      var p1 = new Pet({name:'Spyro', species:'Dragon', class:'Wizard', userId:u1._id.toString()});
+      p1.insert(function(){
+        Pet.deleteById(p1._id.toString(), function(count){
+          expect(count).to.equal(1);
+          done();
+        });
+      });
+    });
+  });
+
 
 
 

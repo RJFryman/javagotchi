@@ -33,6 +33,9 @@ function load(app, fn){
   app.post('/activities', d, activities.create);
   app.del('/activities/:id', d, activities.destroy);
   app.put('/activities/:id', d, activities.update);
+  app.post('/pets/new', d, pets.create);
+  app.get('/pets/:id', d, pets.show);
+  app.del('/pets/:id', d, pets.kill);
   console.log('Routes Loaded');
   fn();
 }
