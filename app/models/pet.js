@@ -10,6 +10,7 @@ function Pet(data){
   this.name = data.name;
   this.species = data.species;
   this.class = data.class;
+  this.status = data.status || '';
   this.userId = Mongo.ObjectID(data.userId);
 }
 
@@ -44,6 +45,13 @@ Pet.findByUserId = function(userId, fn){
   userId = Mongo.ObjectID(userId);
   pets.find({userId:userId}).toArray(function(err, records){
     fn(records);
+  });
+};
+
+Pet.deleteById = function(id, fn){
+  var _id = Mongo.ObjectID(id);
+  pets.remove({_id:_id}, function(err, count){
+    fn(count);
   });
 };
 
