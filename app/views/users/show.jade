@@ -1,3 +1,24 @@
 extends ../shared/template
 
 block content
+  .row
+    .small-8.columns
+      h1= showUser.name
+      //if user._id = showUser._id
+      h4 Home is at #{showUser.coordinate.join(', ')}
+      h4 You have #{showUser.nodeBucks.toString()} nodebucks!
+      h4 Your last login was at #{showUser.lastLogin.getUTCHours()}:#{showUser.lastLogin.getUTCMinutes()} on #{showUser.lastLogin.getUTCMonth()}/#{showUser.lastLogin.getUTCDate()}/#{showUser.lastLogin.getUTCFullYear()}.
+    .small-4.columns
+      table
+        thead
+          th(colspan='2') pet.name
+        tbody
+          tr
+            td Species
+            td pet.species
+          tr
+            td Class
+            td pet.class
+          tr
+            td Status
+            td pet.status
