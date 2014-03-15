@@ -54,6 +54,48 @@ describe('Pet', function(){
     });
   });
 
+  describe('POST /pets/new', function(){
+    it('should create a new pet', function(done){
+      request(app)
+      .post('/pets/new')
+      .field('name', 'Ripster')
+      .field('species', 'Shark')
+      .field('class', 'Pirate')
+      .field('userId', u1._id.toString())
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        expect(res.text).to.include('Moved Temporarily. Redirecting to /pets');
+        done();
+      });
+    });
+  });
+
+  describe('GET /pets/:id', function(){
+    it('should show the individual pet page', function(done){
+      var id = p1._id.toString();
+      request(app)
+      .get('/pets/'+id)
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        expect(res.text).to.include('Spyro');
+        done();
+      });
+    });
+  });
+
+  describe('DEL /pets/:id', function(){
+    it('should delete the pet', function(done){
+      var id = p1._id.toString();
+      request(app)
+      .del('/pets/'+id)
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        expect(res.text).to.not.include('Spyro');
+        done();
+      });
+    });
+  });
+
   
 
 });

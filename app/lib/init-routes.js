@@ -24,6 +24,9 @@ function load(app, fn){
   app.post('/login', d, users.authenticate);
   app.get('/pets', d, pets.index);
   app.get('/pets/new', d, pets.new);
+  app.post('/pets/new', d, pets.create);
+  app.get('/pets/:id', d, pets.show);
+  app.del('/pets/:id', d, pets.kill);
   console.log('Routes Loaded');
   fn();
 }
