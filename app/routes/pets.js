@@ -1,6 +1,7 @@
 'use strict';
 
 var Pet = require('../models/pet');
+var User = require('../models/user');
 
 exports.index = function(req, res){
   res.render('pets/index', {title:'Pets'});
@@ -19,10 +20,11 @@ exports.create = function(req, res){
 };
 
 exports.show = function(req, res){
-  Pet.findById(req.params.id, function(foundPet){
-    res.render('pets/show', {title:foundPet.name});
+  Pet.findById(req.params.id, function(pet){
+    User.findById(pet.userId.toString(), function(owner){
+      res.render('pets/show', {pet:pet, owner:owner});
+    });
   });
-  //res.render('pets/show', {pet:pet});
 };
 
 exports.kill = function(req, res){
