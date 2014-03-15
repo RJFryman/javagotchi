@@ -9,6 +9,15 @@ module.exports = Pet;
 function Pet(data){
   this.name = data.name;
   this.species = data.species;
+  if(data.species==='Shark'){
+    this.image = '/img/pets/shark1.jpg';
+  }else if(data.species==='Robot'){
+    this.image = '/img/pets/robot1.jpg';
+  }else if(data.species==='Dragon'){
+    this.image = '/img/pets/dragon1.jpg';
+  }else{
+    this.image = '/img/pets/alien1.jpg';
+  }
   this.class = data.class;
   this.status = data.status || 'Happy';
   this.userId = Mongo.ObjectID(data.userId);

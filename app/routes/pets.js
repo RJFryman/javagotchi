@@ -4,7 +4,10 @@ var Pet = require('../models/pet');
 var User = require('../models/user');
 
 exports.index = function(req, res){
-  res.render('pets/index', {title:'Pets'});
+  Pet.findAll(function(pets){
+    console.log(pets);
+    res.render('pets/index', {title:'Pets', pets:pets});
+  });
 };
 
 exports.new = function(req, res){

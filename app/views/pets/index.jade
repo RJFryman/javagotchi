@@ -16,9 +16,11 @@ block content
           th Species
           th Class
         tbody
-         // for each pet in pets
+          each pet in pets
             tr
-              td= pet.image
+              td
+                a(href='/pets/'+pet._id.toString())
+                  img(src=pet.image)
               td= pet.status
               td= pet.name
               td= pet.species
