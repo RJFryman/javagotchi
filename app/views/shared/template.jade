@@ -21,15 +21,18 @@ html(class='no-js', lang='en')
       section.top-bar-section
         ul.left
         ul.right
-          li: a(href="/") Home
-          li.divider
-          li: a(href="/pets") Pets
-          li.divider
-          li: a(href="/pets/new") New Pet
-          li.divider
-          li: a(href="/register") Register
-          li.divider
-          li: a(href="/login") Login
+          if user
+            li: a(href="/pets") Pets
+            li.divider
+            li: a(href="/pets/new") New Pet
+            li.divider
+            li: a(href="/users/"+user._id.toString())= user.email
+            li.divider
+            li: a(href="/logout") Log Out
+          if !user
+            li: a(href="/register") Register
+            li.divider
+            li: a(href="/login") Log In
     .row
       .small-12.columns
         block content
