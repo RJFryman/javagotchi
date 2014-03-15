@@ -57,10 +57,13 @@ describe('Activities', function(){
     });
   });
 
+//--------------------- AUTHORIZED -----------------------//
+
   describe('GET /activities', function(){
     it('should render the activities index', function(done){
       request(app)
       .get('/activities')
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
@@ -69,6 +72,7 @@ describe('Activities', function(){
     it('should render the new activity page', function(done){
       request(app)
       .get('/activities/new')
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
@@ -77,11 +81,10 @@ describe('Activities', function(){
     it('should render the activity show page', function(done){
       request(app)
       .get('/activities/' + a1._id.toString())
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
-
-//--------------------- AUTHORIZED -----------------------//
 
   describe('POST /activities', function(){
     it('should create an activity and redirect to the activities show page', function(done){

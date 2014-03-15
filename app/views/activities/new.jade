@@ -22,3 +22,18 @@ block content
       input(type='hidden', name='userId')
       input(type='hidden', name='nodemonId')
       button.radius.small Add Activity
+      button#queryfoursquare.radius.small Query Foursquare
+
+      .row
+        select#venueselect
+
+      .row
+        table
+          thead
+            th
+            th Venue Name
+            th Venue Address
+          tbody#venues
+
+block scripts
+  script(src='/js/source/activity.js')
