@@ -46,9 +46,9 @@ exports.logout = function(req, res){
 
 exports.show = function(req, res){
   User.findById(req.params.id, function(showUser){
-    Pet.findByUserId(req.params.id, function(pet){
-      Activity.findByUserId(req.params.id, function(activity){
-        res.render('users/show', {showUser:showUser, activity:activity, pet:pet});
+    Pet.findByUserId(req.params.id, function(pets){
+      Activity.findByUserId(req.params.id, function(activities){
+        res.render('users/show', {showUser:showUser, activities:activities, pets:pets});
       });
     });
   });

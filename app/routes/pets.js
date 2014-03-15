@@ -1,6 +1,7 @@
 'use strict';
 
 var Pet = require('../models/pet');
+var User = require('../models/user');
 
 exports.index = function(req, res){
   Pet.findAll(function(pets){
@@ -16,16 +17,17 @@ exports.new = function(req, res){
 exports.create = function(req, res){
   var pet = new Pet(req.body);
   pet.insert(function(){
-    pet.id = pet._id.toString();
-    res.redirect('/pets'+pet.id);
+    var id = pet._id.toString();
+    res.redirect('/pets/' + id);
   });
 };
 
 exports.show = function(req, res){
-  Pet.findById(req.params.id, function(foundPet){
-    res.render('pets/show', {title:foundPet.name});
+  Pet.findById(req.params.id, function(pet){
+    User.findById(pet.userId.toString(), function(owner){
+      res.render('pets/show', {pet:pet, owner:owner});
+    });
   });
-  //res.render('pets/show', {pet:pet});
 };
 
 exports.kill = function(req, res){

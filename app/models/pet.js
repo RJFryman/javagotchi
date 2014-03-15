@@ -10,7 +10,7 @@ function Pet(data){
   this.name = data.name;
   this.species = data.species;
   this.class = data.class;
-  this.status = data.status || '';
+  this.status = data.status || 'Happy';
   this.userId = Mongo.ObjectID(data.userId);
 }
 
