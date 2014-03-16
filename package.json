@@ -24,7 +24,10 @@
     "express-less":    "*",
     "request":         "*",
     "express-session": "*",
-    "passport-facebook": "*"
+    "passport":        "*",
+    "passport-local":  "*",
+    "passport-facebook": "*",
+    "connect-flash":   "*"
   },
   "devDependencies": {
     "grunt":                "*",

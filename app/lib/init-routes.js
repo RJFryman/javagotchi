@@ -23,7 +23,7 @@ function load(app, fn){
   app.get('/register', d, users.fresh);
   app.post('/register', d, users.create);
   app.get('/login', d, users.login);
-  app.post('/login', d, users.authenticate);
+  app.post('/login', d, passport.authenticate('local', {successRedirect:'/', failureRedirect:'/login'}));
   app.get('/users/:id', d, users.show);
   app.get('/logout', d, users.logout);
   app.get('/activities', d, activities.index);
@@ -37,8 +37,6 @@ function load(app, fn){
   app.post('/pets/new', d, pets.create);
   app.get('/pets/:id', d, pets.show);
   app.del('/pets/:id', d, pets.kill);
-  app.get('/auth/facebook', passport.authenticate('facebook'));
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
   console.log('Routes Loaded');
   fn();
 }
