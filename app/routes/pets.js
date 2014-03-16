@@ -24,6 +24,7 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
   Pet.findById(req.params.id, function(pet){
+    console.log(pet);
     User.findById(pet.userId.toString(), function(owner){
       res.render('pets/show', {pet:pet, owner:owner});
     });
