@@ -7,6 +7,9 @@ block pet
   .panel.text-center#name
     h1= pet.name.toUpperCase()
 
+block content
+  h1.text-center#name= pet.name
+
   .row
     .small-3.columns
       div#image
