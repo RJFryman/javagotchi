@@ -54,9 +54,6 @@ function load(app, fn){
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/login'}), function(req, res){
     res.redirect('/');
   });
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/'}), function(req, res){
-    res.redirect('/');
-  });
   app.get('/register', d, users.fresh);
   app.post('/register', d, users.create);
   app.get('/login', d, users.login);
