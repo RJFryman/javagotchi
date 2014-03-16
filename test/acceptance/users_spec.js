@@ -65,6 +65,7 @@ describe('user', function(){
         done();
       });
     });
+
     it('should not allow a duplicate email to register', function(done){
       var filename = __dirname + '/../fixtures/testfile-copy.jpg';
       request(app)
@@ -95,10 +96,10 @@ describe('user', function(){
     });
   });
 
-  describe('POST /login', function(){
+  describe('POST /login/local', function(){
     it('should login a new user', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'sami1@nomail.com')
       .field('password', '1234')
       .end(function(err, res){
@@ -110,7 +111,7 @@ describe('user', function(){
 
     it('should not login a new user', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'wrong@nomail.com')
       .field('password', '1234')
       .end(function(err, res){
@@ -122,7 +123,7 @@ describe('user', function(){
 
     it('should not login a new user', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'sami1@nomail.com')
       .field('password', '12234')
       .end(function(err, res){
