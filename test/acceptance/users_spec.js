@@ -28,11 +28,11 @@ describe('user', function(){
     exec(cmd, function(){
       var origfile = __dirname + '/../fixtures/testfile.jpg';
       var copyfile = __dirname + '/../fixtures/testfile-copy.jpg';
-      var copyfile1 = __dirname + '/../fixtures/testfile-copy1.jpg';
+      var copyfile1 = __dirname + '/../fixtures/testfiles-copy1.jpg';
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
-        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0', pic: '/data/code/nodemon/test/fixtures/testfile-copy1.jpg'});
+        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
         inUser.register(function(){
           request(app)
           .post('/login')

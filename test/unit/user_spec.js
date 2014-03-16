@@ -30,7 +30,7 @@ describe('User', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile2));
       global.nss.db.dropDatabase(function(err, result){
-        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0', pic: '/data/code/nodemon/test/fixtures/testfile2-copy.jpg'});
+        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0'});
         u1.register(function(){
           done();
         });
@@ -92,10 +92,9 @@ describe('User', function(){
 
   describe('.findById', function(){
     it('should find a user by id', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', pic: '/data/code/nodemon/test/fixtures/testfile-copy.jpg', lat: '0', lng:'0'});
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', lat: '0', lng:'0'});
       u1.register(function(){
         User.findById(u1._id.toString(), function(record){
-          expect(u1.pic).to.equal('/img/users/testfile-copy.jpg');
           expect(u1.email).to.equal('sam@nomail.com');
           expect(u1.password).to.not.equal('1234');
           expect(record.name).to.equal('Sam');
