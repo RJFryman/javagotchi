@@ -15,6 +15,7 @@ exports.new = function(req, res){
 };
 
 exports.create = function(req, res){
+  req.body.userId = req.session.userId;
   var pet = new Pet(req.body);
   pet.insert(function(){
     var id = pet._id.toString();

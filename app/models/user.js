@@ -24,7 +24,7 @@ function User(user){
   this.email = user.email;
   this.password = user.password;
   this.pic = user.pic ? user.pic : null;
-  this.nodeBucks = user.nodeBucks * 1;
+  this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
   this.lastLogin = new Date();
   this.coordinate = [(user.lat * 1), (user.lng * 1)];
 }
