@@ -35,7 +35,7 @@ describe('user', function(){
         inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
         inUser.register(function(){
           request(app)
-          .post('/login')
+          .post('/login/local')
           .field('email', 'sami1@nomail.com')
           .field('password', '1234')
           .end(function(err, res){

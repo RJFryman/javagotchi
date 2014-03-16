@@ -32,6 +32,8 @@ app.use(express.session({
   secret: 'gottacatchemallornotwhatever',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(lookupUser);
 app.use(bounceUser);
 app.use(app.router);
