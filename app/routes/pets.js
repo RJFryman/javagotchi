@@ -5,7 +5,6 @@ var User = require('../models/user');
 
 exports.index = function(req, res){
   Pet.findAll(function(pets){
-    console.log(pets);
     res.render('pets/index', {title:'Pets', pets:pets});
   });
 };
