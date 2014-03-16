@@ -11,36 +11,6 @@ var initMongo  = require('./lib/init-mongo');
 var initRoutes = require('./lib/init-routes');
 var lookupUser = require('./lib/lookup-user');
 var bounceUser = require('./lib/bounce-user');
-var passport = require('passport');
-var util = require('util');
-var FacebookStrategy = require('passport-facebook').Strategy;
-
-var FACEBOOK_APP_ID = '309439962542948';
-var FACEBOOK_APP_SECRET = 'e28ecd5f50aac0d75fdf9578ccf71240';
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: '/auth/facebook/callback'
-  },
-  function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function () {
-      // To keep the example simple, the user's Facebook profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the Facebook account with a user record in your database,
-      // and return that user instead.
-      return done(null, profile);
-    });
-  }
-));
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -61,8 +31,6 @@ app.use(express.session({
   secret: 'change-this-to-a-super-secret-message',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(lookupUser);
 app.use(bounceUser);
 app.use(app.router);

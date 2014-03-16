@@ -1,7 +1,6 @@
 'use strict';
 
 var d = require('../lib/request-debug');
-var passport = require('passport');
 var initialized = false;
 
 module.exports = function(req, res, next){
@@ -37,8 +36,6 @@ function load(app, fn){
   app.post('/pets/new', d, pets.create);
   app.get('/pets/:id', d, pets.show);
   app.del('/pets/:id', d, pets.kill);
-  app.get('/auth/facebook', passport.authenticate('facebook'));
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
   console.log('Routes Loaded');
   fn();
 }
