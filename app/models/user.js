@@ -7,6 +7,7 @@ var email = require('../lib/email');
 var path = require('path');
 var fs = require('fs');
 var Mongo = require('mongodb');
+var _ = require('lodash');
 
 /* ---------------------------------- *
  * User
@@ -21,12 +22,13 @@ var Mongo = require('mongodb');
 
 function User(user){
   this.name = user.name;
-  this.email = user.email;
+  this.email = user.email || '';
   this.password = user.password;
   this.pic = user.pic ? user.pic : null;
   this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
   this.lastLogin = new Date();
   this.coordinate = [(user.lat * 1), (user.lng * 1)];
+  this.facebookId = user.facebookId;
 }
 
 User.prototype.register = function(fn){
@@ -65,6 +67,12 @@ User.findById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   users.findOne({_id:_id}, function(err, record){
     fn(record);
+  });
+};
+
+User.findByFacebookId = function(facebookId, fn){
+  users.findOne({facebookId:facebookId}, function(err, user){
+    fn(_.extend(user, User.prototype));
   });
 };
 
