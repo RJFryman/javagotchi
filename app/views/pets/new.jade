@@ -1,0 +1,32 @@
+extends ../shared/template
+
+block less
+ link(rel='stylesheet', href='/less/pets.css')
+
+block content
+  h1= title
+
+  .row
+    .small-4.columns
+      form(method='post', action='/pets/new')
+        fieldset
+          legend Create Your Pet!
+          label: h6 Name
+          input(type='text', name='name')
+          label(for='species'): h6 Choose the Species
+            select(name='species')
+              option Robot
+              option Alien
+              option Shark
+              option Dragon
+              option Lion
+          label(for='role'): h6 Choose the Role
+            select(name='role')
+              option Pirate
+              option Wizard
+              option Ninja
+              option Paladin
+              option Vampire
+          button.small.radius Create
+    .small-8.columns
+

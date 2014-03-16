@@ -1,0 +1,30 @@
+extends ../shared/template
+
+block less
+ link(rel='stylesheet', href='/less/pets.css')
+
+block content
+  h1= title
+
+  .row
+    .small-12.columns
+      table
+        thead
+          th Image
+          th Status
+          th Name
+          th Species
+          th Class
+        tbody
+          each pet in pets
+            tr
+              td
+                a(href='/pets/'+pet._id.toString())
+                  img(src=pet.image)
+              td= pet.status
+              td= pet.name
+              td= pet.species
+              td= pet.role
+
+
+

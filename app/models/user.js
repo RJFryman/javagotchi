@@ -24,8 +24,9 @@ function User(user){
   this.email = user.email;
   this.password = user.password;
   this.pic = user.pic ? user.pic : null;
-  this.nodeBucks = user.nodeBucks * 1;
+  this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
   this.lastLogin = new Date();
+  this.coordinate = [(user.lat * 1), (user.lng * 1)];
 }
 
 User.prototype.register = function(fn){
@@ -129,6 +130,13 @@ User.findAll = function(fn){
 User.findByName = function(name, fn){
   users.findOne({name:name}, function(err, record){
     fn(record);
+  });
+};
+
+User.deleteById = function(id, fn){
+  var _id = Mongo.ObjectID(id);
+  users.remove({_id:_id}, function(err, count){
+    fn(count);
   });
 };
 
