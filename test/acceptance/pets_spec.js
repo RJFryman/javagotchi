@@ -25,7 +25,7 @@ describe('Pet', function(){
         p1 = new Pet({name:'Spyro', species:'Dragon', class:'Wizard', userId:u1._id.toString()});
         p1.insert(function(){
           request(app)
-          .post('/login')
+          .post('/login/local')
           .field('email', 'sami1@nomail.com')
           .field('password', '1234')
           .end(function(err, res){

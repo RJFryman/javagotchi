@@ -11,6 +11,7 @@ var initMongo  = require('./lib/init-mongo');
 var initRoutes = require('./lib/init-routes');
 var lookupUser = require('./lib/lookup-user');
 var bounceUser = require('./lib/bounce-user');
+var passport   = require('passport');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -28,9 +29,11 @@ app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
   store : new RedisStore({host: 'localhost', port: 6379}),
-  secret: 'change-this-to-a-super-secret-message',
+  secret: 'gottacatchemallornotwhatever',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(lookupUser);
 app.use(bounceUser);
 app.use(app.router);
@@ -42,4 +45,3 @@ server.listen(port, function(){
 });
 
 module.exports = app;
-
