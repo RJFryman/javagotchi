@@ -29,11 +29,11 @@ describe('Pet', function(){
 
   describe('new', function(){
     it('should create a new pet', function(){
-      var p1 = new Pet({name:'Spyro', species:'Dragon', class:'Wizard', userId:u1._id.toString()});
+      var p1 = new Pet({name:'Spyro', species:'Dragon', role:'Wizard', userId:u1._id.toString()});
       expect(p1).to.be.instanceof(Pet);
       expect(p1.name).to.equal('Spyro');
       expect(p1.species).to.equal('Dragon');
-      expect(p1.class).to.equal('Wizard');
+      expect(p1.role).to.equal('Wizard');
       expect(p1.userId.toString()).to.deep.equal(u1._id.toString());
       
     });
@@ -41,13 +41,18 @@ describe('Pet', function(){
 
   describe('insert', function(){
     it('should insert a new pet into the db', function(done){
-      var p1 = new Pet({name:'Spyro', species:'Dragon', class:'Wizard', userId:u1._id.toString()});
+      var p1 = new Pet({name:'Spyro', species:'Dragon', role:'Wizard', userId:u1._id.toString()});
       p1.insert(function(){
         expect(p1).to.be.instanceof(Pet);
         expect(p1.name).to.equal('Spyro');
         expect(p1.species).to.equal('Dragon');
-        expect(p1.class).to.equal('Wizard');
+        expect(p1.role).to.equal('Wizard');
         expect(p1.userId.toString()).to.deep.equal(u1._id.toString());
+        expect(p1.strength).to.equal(8);
+        expect(p1.dexterity).to.equal(7);
+        expect(p1.constitution).to.equal(11);
+        expect(p1.intelligence).to.equal(10);
+        expect(p1.wisdom).to.equal(14);
         expect(p1._id).to.be.instanceof(Mongo.ObjectID);
         done();
       });

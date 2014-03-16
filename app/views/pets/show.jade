@@ -4,7 +4,7 @@ block less
  link(rel='stylesheet', href='/less/pets.css')
 
 block content
-  h1.text-center#name= pet.name.toUpperCase()
+  h1.text-center#name= pet.name
 
   .row
     .small-3.columns
@@ -21,6 +21,6 @@ block content
             = pet.species
       .row
         .small-12.columns
-          h2 Class:
-            = pet.class
+          h2 Role:
+            = pet.role
     .small-5.columns

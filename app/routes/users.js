@@ -12,7 +12,18 @@ exports.create = function(req, res){
   var user = new User(req.body);
   user.register(function(){
     if(user._id){
-      res.redirect('/');
+      User.findByEmailAndPassword(req.body.email, req.body.password, function(foundUser){
+        if(foundUser){
+          req.session.regenerate(function(){
+            req.session.userId = user._id;
+            req.session.save(function(){
+              res.redirect('/show');
+            });
+          });
+        }else{
+          res.render('users/fresh', {title: 'Register User'});
+        }
+      });
     }else{
       res.render('users/fresh', {title: 'Register User'});
     }
