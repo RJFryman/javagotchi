@@ -27,7 +27,8 @@
     "passport":        "*",
     "passport-local":  "*",
     "passport-facebook": "*",
-    "connect-flash":   "*"
+    "connect-flash":   "*",
+    "agenda":          "*"
   },
   "devDependencies": {
     "grunt":                "*",

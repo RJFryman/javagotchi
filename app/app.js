@@ -12,10 +12,13 @@ var initRoutes = require('./lib/init-routes');
 var lookupUser = require('./lib/lookup-user');
 var bounceUser = require('./lib/bounce-user');
 var passport   = require('passport');
+var agenda = require('./lib/agenda');
 
 var app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+agenda.start();
 
 /* --- pipeline begins */
 app.use(initMongo.connect);

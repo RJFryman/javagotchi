@@ -2,6 +2,7 @@
 
 var Pet = require('../models/pet');
 var User = require('../models/user');
+var agenda = require('../lib/agenda');
 
 exports.index = function(req, res){
   Pet.findAll(function(pets){
@@ -19,6 +20,7 @@ exports.create = function(req, res){
   var pet = new Pet(req.body);
   pet.insert(function(){
     var id = pet._id.toString();
+    agenda.restless(id);
     res.redirect('/pets/' + id);
   });
 };
