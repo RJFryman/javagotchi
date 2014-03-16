@@ -18,7 +18,7 @@ function Pet(data){
   }else{
     this.image = '/img/pets/alien1.jpg';
   }
-  this.class = data.class;
+  this.role = data.role;
   this.status = data.status || 'Happy';
   this.userId = Mongo.ObjectID(data.userId);
 }

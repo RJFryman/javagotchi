@@ -61,6 +61,7 @@ describe('Activities', function(){
     it('should render the activities index', function(done){
       request(app)
       .get('/activities')
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
@@ -69,6 +70,7 @@ describe('Activities', function(){
     it('should render the new activity page', function(done){
       request(app)
       .get('/activities/new')
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
@@ -77,6 +79,7 @@ describe('Activities', function(){
     it('should render the activity show page', function(done){
       request(app)
       .get('/activities/' + a1._id.toString())
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
