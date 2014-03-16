@@ -15,15 +15,6 @@ module.exports = Pet;
 function Pet(data){
   this.name = data.name;
   this.species = data.species;
-  if(data.species==='Shark'){
-    this.image = '/img/pets/shark1.jpg';
-  }else if(data.species==='Robot'){
-    this.image = '/img/pets/robot1.jpg';
-  }else if(data.species==='Dragon'){
-    this.image = '/img/pets/dragon1.jpg';
-  }else{
-    this.image = '/img/pets/alien1.jpg';
-  }
   this.role = data.role;
   this.status = data.status || 'Happy';
   this.userId = Mongo.ObjectID(data.userId);
@@ -32,6 +23,58 @@ function Pet(data){
   this.constituition = data.constitution;
   this.intelligence = data.intelligence;
   this.wisdom = data.wisdom;
+}
+
+function assignImage(species, role, fn){
+  if(species === 'Alien' && role === 'Ninja'){
+    fn('/img/pets/ninjaAlien.jpg');
+  }else if(species === 'Dragon' && role === 'Ninja'){
+    fn('/img/pets/ninjaDragon.jpg');
+  }else if(species === 'Lion' && role === 'Ninja'){
+    fn('/img/pets/ninjaLion.jpg');
+  }else if(species === 'Robot' && role === 'Ninja'){
+    fn('/img/pets/ninjaLion.jpg');
+  }else if(species === 'Shark' && role === 'Ninja'){
+    fn('/img/pets/ninjaShark.jpg');
+  }else if(species === 'Alien' && role === 'Paladin'){
+    fn('/img/pets/paladinAlien.png');
+  }else if(species === 'Dragon' && role === 'Paladin'){
+    fn('/img/pets/paladinDragon.png');
+  }else if(species === 'Lion' && role === 'Paladin'){
+    fn('/img/pets/paladinLion.jpg');
+  }else if(species === 'Robot' && role === 'Paladin'){
+    fn('/img/pets/paladinRobot.jpg');
+  }else if(species === 'Shark' && role === 'Paladin'){
+    fn('/img/pets/paladinShark.jpg');
+  }else if(species === 'Alien' && role === 'Pirate'){
+    fn('/img/pets/pirateAlien.gif');
+  }else if(species === 'Dragon' && role === 'Pirate'){
+    fn('/img/pets/pirateDragon.jpg');
+  }else if(species === 'Lion' && role === 'Pirate'){
+    fn('/img/pets/pirateLion.jpg');
+  }else if(species === 'Robot' && role === 'Pirate'){
+    fn('/img/pets/pirateRobot.png');
+  }else if(species === 'Shark' && role === 'Pirate'){
+    fn('/img/pets/pirateShark.jpg');
+  }else if(species === 'Alien' && role === 'Vampire'){
+    fn('/img/pets/vampireAlien.jpg');
+  }else if(species === 'Dragon' && role === 'Vampire'){
+    fn('/img/pets/vampireDragon.png');
+  }else if(species === 'Lion' && role === 'Vampire'){
+    fn('/img/pets/vampireLion.png');
+  }else if(species === 'Robot' && role === 'Vampire'){
+    fn('/img/pets/vampireRobot.jpg');
+  }else if(species === 'Shark' && role === 'Vampire'){
+    fn('/img/pets/vampireShark.jpg');
+  }else if(species === 'Alien' && role === 'Wizard'){
+    fn('/img/pets/wizardAlien.jpg');
+  }else if(species === 'Dragon' && role === 'Wizard'){
+    fn('/img/pets/wizardDragon.jpg');
+  }else if(species === 'Lion' && role === 'Wizard'){
+    fn('/img/pets/wizardLion.jpg');
+  }else if(species === 'Shark' && role === 'Wizard'){
+    fn('/img/pets/wizardShark.jpg');
+  }
 }
 
 function assignStats(species, role, fn){
@@ -221,6 +264,9 @@ Pet.prototype.insert = function(fn){
     self.constitution = c;
     self.intelligence = i;
     self.wisdom = w;
+  });
+  assignImage(this.species, this.role, function(img){
+    self.image = img;
   });
   pets.insert(self, function(err, record){
     fn(err);
