@@ -8,7 +8,7 @@ var exec = require('child_process').exec;
 var app = require('../../app/app');
 var expect = require('chai').expect;
 var User, inUser;
-//var cookie;
+var cookie;
 
 describe('user', function(){
 
@@ -34,7 +34,14 @@ describe('user', function(){
       global.nss.db.dropDatabase(function(err, result){
         inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0', pic: '/data/code/nodemon/test/fixtures/testfile-copy1.jpg'});
         inUser.register(function(){
-          done();
+          request(app)
+          .post('/login')
+          .field('email', 'sami1@nomail.com')
+          .field('password', '1234')
+          .end(function(err, res){
+            cookie = res.headers['set-cookie'];
+            done();
+          });
         });
       });
     });
@@ -145,6 +152,7 @@ describe('user', function(){
     it('should redirect to the show page', function(done){
       request(app)
       .get('/users/'+ inUser._id)
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });
