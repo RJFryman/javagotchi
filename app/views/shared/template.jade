@@ -26,7 +26,7 @@ html(class='no-js', lang='en')
             li.divider
             li: a(href="/pets/new") New Pet
             li.divider
-            li: a(href="/users/"+user._id.toString())= user.email
+            li: a(href="/users/"+user._id.toString())= user.name
             li.divider
             li: a(href="/logout") Log Out
           if !user
