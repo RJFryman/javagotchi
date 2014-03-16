@@ -3,9 +3,14 @@ extends ../shared/template
 block less
  link(rel='stylesheet', href='/less/pets.css')
 
+<<<<<<< HEAD
 block pet
   .panel.text-center#name
     h1= pet.name.toUpperCase()
+=======
+block content
+  h1.text-center#name= pet.name
+>>>>>>> master
 
   .row
     .small-3.columns
