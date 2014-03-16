@@ -20,7 +20,7 @@ function Pet(data){
   this.userId = Mongo.ObjectID(data.userId);
   this.strength = data.strength;
   this.dexterity = data.dexterity;
-  this.constituition = data.constitution;
+  this.constitution = data.constitution;
   this.intelligence = data.intelligence;
   this.wisdom = data.wisdom;
 }
@@ -33,7 +33,7 @@ function assignImage(species, role, fn){
   }else if(species === 'Lion' && role === 'Ninja'){
     fn('/img/pets/ninjaLion.jpg');
   }else if(species === 'Robot' && role === 'Ninja'){
-    fn('/img/pets/ninjaLion.jpg');
+    fn('/img/pets/ninjaRobotjpg');
   }else if(species === 'Shark' && role === 'Ninja'){
     fn('/img/pets/ninjaShark.jpg');
   }else if(species === 'Alien' && role === 'Paladin'){
