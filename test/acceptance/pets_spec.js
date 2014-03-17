@@ -44,7 +44,7 @@ describe('Pet', function(){
       .set('cookie', cookie)
       .end(function(err, res){
         expect(res.status).to.equal(200);
-        expect(res.text).to.include('Pets');
+        expect(res.text).to.include('Companions');
         done();
       });
     });
@@ -57,7 +57,7 @@ describe('Pet', function(){
       .set('cookie', cookie)
       .end(function(err, res){
         expect(res.status).to.equal(200);
-        expect(res.text).to.include('New Pet');
+        expect(res.text).to.include('New Companion');
         done();
       });
     });

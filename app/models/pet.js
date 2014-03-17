@@ -20,7 +20,7 @@ function Pet(data){
   this.userId = Mongo.ObjectID(data.userId);
   this.strength = data.strength;
   this.dexterity = data.dexterity;
-  this.constituition = data.constitution;
+  this.constitution = data.constitution;
   this.intelligence = data.intelligence;
   this.wisdom = data.wisdom;
 }
