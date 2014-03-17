@@ -5,12 +5,12 @@ var User = require('../models/user');
 
 exports.index = function(req, res){
   Pet.findAll(function(pets){
-    res.render('pets/index', {title:'Pets', pets:pets});
+    res.render('pets/index', {title:'Companions', pets:pets});
   });
 };
 
 exports.new = function(req, res){
-  res.render('pets/new', {title:'New Pet'});
+  res.render('pets/new', {title:'New Companion'});
 };
 
 exports.create = function(req, res){
@@ -26,7 +26,7 @@ exports.show = function(req, res){
   Pet.findById(req.params.id, function(pet){
     console.log(pet);
     User.findById(pet.userId.toString(), function(owner){
-      res.render('pets/show', {pet:pet, owner:owner});
+      res.render('pets/show', {title: pet.name, pet:pet, owner:owner});
     });
   });
 };

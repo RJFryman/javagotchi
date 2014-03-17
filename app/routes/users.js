@@ -3,6 +3,7 @@
 var User = require('../models/user');
 var Pet = require('../models/pet');
 var Activity = require('../models/activity');
+var time;
 
 exports.fresh = function(req, res){
   res.render('users/fresh', {title: 'Register User'});
@@ -31,7 +32,7 @@ exports.create = function(req, res){
 };
 
 exports.login = function(req, res){
-  res.render('users/login', {title: 'Login User'});
+  res.render('users/login', {title: 'Login User', time:time});
 };
 
 exports.authenticate = function(req, res){
@@ -59,7 +60,7 @@ exports.show = function(req, res){
   User.findById(req.params.id, function(showUser){
     Pet.findByUserId(req.params.id, function(pets){
       Activity.findByUserId(req.params.id, function(activities){
-        res.render('users/show', {showUser:showUser, activities:activities, pets:pets});
+        res.render('users/show', {title: showUser.name, time:time, showUser:showUser, activities:activities, pets:pets});
       });
     });
   });

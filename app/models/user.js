@@ -147,4 +147,3 @@ User.deleteById = function(id, fn){
     fn(count);
   });
 };
-
