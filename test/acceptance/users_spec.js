@@ -8,7 +8,7 @@ var exec = require('child_process').exec;
 var app = require('../../app/app');
 var expect = require('chai').expect;
 var User, inUser;
-//var cookie;
+var cookie;
 
 describe('user', function(){
 
@@ -28,13 +28,20 @@ describe('user', function(){
     exec(cmd, function(){
       var origfile = __dirname + '/../fixtures/testfile.jpg';
       var copyfile = __dirname + '/../fixtures/testfile-copy.jpg';
-      var copyfile1 = __dirname + '/../fixtures/testfile-copy1.jpg';
+      var copyfile1 = __dirname + '/../fixtures/testfiles-copy1.jpg';
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
-        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0', pic: '/data/code/nodemon/test/fixtures/testfile-copy1.jpg'});
+        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
         inUser.register(function(){
-          done();
+          request(app)
+          .post('/login/local')
+          .field('email', 'sami1@nomail.com')
+          .field('password', '1234')
+          .end(function(err, res){
+            cookie = res.headers['set-cookie'];
+            done();
+          });
         });
       });
     });
@@ -44,6 +51,14 @@ describe('user', function(){
     it('should display the home page', function(done){
       request(app)
       .get('/')
+      .expect(200, done);
+    });
+  });
+
+  describe('GET /register', function(){
+    it('should display the register page', function(done){
+      request(app)
+      .get('/register')
       .expect(200, done);
     });
   });
@@ -65,6 +80,7 @@ describe('user', function(){
         done();
       });
     });
+
     it('should not allow a duplicate email to register', function(done){
       var filename = __dirname + '/../fixtures/testfile-copy.jpg';
       request(app)
@@ -95,22 +111,22 @@ describe('user', function(){
     });
   });
 
-  describe('POST /login', function(){
-    it('should login a new user', function(done){
+  describe('POST /login/local', function(){
+    it('should login a new user and update lastLogin', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'sami1@nomail.com')
       .field('password', '1234')
       .end(function(err, res){
         expect(res.status).to.equal(302);
-        expect(res.text).to.equal('Moved Temporarily. Redirecting to /');
+        expect(res.text).to.include('Moved Temporarily. Redirecting to /');
         done();
       });
     });
 
     it('should not login a new user', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'wrong@nomail.com')
       .field('password', '1234')
       .end(function(err, res){
@@ -122,7 +138,7 @@ describe('user', function(){
 
     it('should not login a new user', function(done){
       request(app)
-      .post('/login')
+      .post('/login/local')
       .field('email', 'sami1@nomail.com')
       .field('password', '12234')
       .end(function(err, res){
@@ -145,6 +161,7 @@ describe('user', function(){
     it('should redirect to the show page', function(done){
       request(app)
       .get('/users/'+ inUser._id)
+      .set('cookie', cookie)
       .expect(200, done);
     });
   });

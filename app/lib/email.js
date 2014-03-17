@@ -5,14 +5,14 @@ var fs = require('fs');
 var jade = require('jade');
 
 exports.sendWelcome = function(data, fn){
-  send({from:'admin@adamthede.me', to:data.to, subject:'Welcome to Nodemon', template:'welcome'}, fn);
+  send({from:'admin@rjfryman.com', to:data.to, name:data.name,  subject:'Welcome to Nodemon', template:'welcome'}, fn);
 };
 
 function send(data, fn){
   if(data.to.match(/@nomail.com/g)){fn(); return;}
 
   var key = process.env.MAILGUN;
-  var url = 'https://api:' + key + '@api.mailgun.net/v2/adamthede.me/messages';
+  var url = 'https://api:' + key + '@api.mailgun.net/v2/rjfryman.com/messages';
   var post = request.post(url, function(err, response, body){
     fn(err, body);
   });

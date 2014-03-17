@@ -7,6 +7,7 @@ var email = require('../lib/email');
 var path = require('path');
 var fs = require('fs');
 var Mongo = require('mongodb');
+var _ = require('lodash');
 
 /* ---------------------------------- *
  * User
@@ -21,12 +22,14 @@ var Mongo = require('mongodb');
 
 function User(user){
   this.name = user.name;
-  this.email = user.email;
+  this.email = user.email || '';
   this.password = user.password;
   this.pic = user.pic ? user.pic : null;
-  this.nodeBucks = user.nodeBucks * 1;
-  this.lastLogin = new Date();
+  this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
+  this.lastLogin = user.lastLogin? user.lastLogin : new Date();
   this.coordinate = [(user.lat * 1), (user.lng * 1)];
+  this.facebookId = user.facebookId;
+  this.loginDifference = user.loginDifference? user.loginDifference : null;
 }
 
 User.prototype.register = function(fn){
@@ -41,7 +44,7 @@ User.prototype.register = function(fn){
     }
     insert(self, function(err){
       if(self._id){
-        email.sendWelcome({to:self.email}, function(err, body){
+        email.sendWelcome({to:self.email, name:self.name}, function(err, body){
           fn(err, body);
         });
       }else{
@@ -68,12 +71,18 @@ User.findById = function(id, fn){
   });
 };
 
+User.findByFacebookId = function(facebookId, fn){
+  users.findOne({facebookId:facebookId}, function(err, user){
+    fn(_.extend(user, User.prototype));
+  });
+};
+
 User.findByEmailAndPassword = function(email, password, fn){
   users.findOne({email:email}, function(err, user){
     if(user){
       bcrypt.compare(password, user.password, function(err, result){
         if(result){
-          fn(user);
+          fn(_.extend(user, User.prototype));
         }else{
           fn();
         }
@@ -140,3 +149,12 @@ User.deleteById = function(id, fn){
   });
 };
 
+User.prototype.loginTime = function(fn){
+  var newLogin = new Date();
+  var difference = (newLogin.getTime() - this.lastLogin.getTime())/60000;
+  this.loginDifference = difference;
+  this.lastLogin = newLogin;
+  update(this, function(){
+    fn(difference);
+  });
+};

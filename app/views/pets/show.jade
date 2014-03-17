@@ -1,5 +1,52 @@
 extends ../shared/template
 
-block content
-  h1= title
+block less
+ link(rel='stylesheet', href='/less/pets.css')
+
+block pet
+  .panel.text-center#name
+    h1= pet.name.toUpperCase()
+
+  .row
+    .small-3.columns
+      div#image
+        img(src= pet.image)
+    .small-4.columns
+      .row
+        .small-12.columns
+          h2 Owner: 
+            a(href='/users/'+pet.userId)
+              = owner.name
+      .row
+        .small-12.columns
+          h2 Status: 
+            = pet.status
+      .row
+        .small-12.columns
+          h2 Species: 
+            = pet.species
+      .row
+        .small-12.columns
+          h2 Role: 
+            = pet.role
+    .small-5.columns
+
+  .row
+    .small-2.columns.text-center
+      h3.stats Strength
+      p= pet.strength
+    .small-2.columns.text-center
+      h3.stats Dexterity
+      p= pet.dexterity
+    .small-2.columns.text-center
+      h3.stats Constitution
+      p= pet.constitution
+    .small-2.columns.text-center
+      h3.stats Intelligence
+      p= pet.intelligence
+    .small-2.columns.text-center
+      h3.stats Wisdom
+      p= pet.wisdom
+    .small-2.columns.text-center
+
 

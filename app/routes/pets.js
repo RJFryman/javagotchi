@@ -1,11 +1,38 @@
 'use strict';
 
-//var Pet = require('../models/pet');
+var Pet = require('../models/pet');
+var User = require('../models/user');
 
 exports.index = function(req, res){
-  res.render('pets/index', {title:'Pets'});
+  Pet.findAll(function(pets){
+    res.render('pets/index', {title:'Companions', pets:pets});
+  });
 };
 
 exports.new = function(req, res){
-  res.render('pets/new', {title:'New Pet'});
+  res.render('pets/new', {title:'New Companion'});
+};
+
+exports.create = function(req, res){
+  req.body.userId = req.user ? req.user._id : req.session.userId;
+  var pet = new Pet(req.body);
+  pet.insert(function(){
+    var id = pet._id.toString();
+    res.redirect('/pets/' + id);
+  });
+};
+
+exports.show = function(req, res){
+  Pet.findById(req.params.id, function(pet){
+    console.log(pet);
+    User.findById(pet.userId.toString(), function(owner){
+      res.render('pets/show', {title: pet.name, pet:pet, owner:owner});
+    });
+  });
+};
+
+exports.kill = function(req, res){
+  Pet.deleteById(req.params.id, function(){
+    res.redirect('/');
+  });
 };

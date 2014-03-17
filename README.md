@@ -1,21 +1,26 @@
-NSS Cohort 4 Integrated Node.js Template
-========================================
+NODEMON: A HEALTH/SOCIALLY FOCUSED APP
+======================================
 
-- Node.js
-- Express
-- MongoDB
-- Redis
-- Moment
-- Bcrypt
-- Lo-Dash
-- Less
-- Jade
-- Request
-- Grunt
-- Mocha
-- Chai
-- SuperTest
-- Blanket
-- TravisCI
-- Coveralls
+BADGES
+------
+
+[![Build Status](https://travis-ci.org/RJFryman/nodemon.png?branch=master)](https://travis-ci.org/RJFryman/nodemon)
+[![Coverage Status](https://coveralls.io/repos/RJFryman/nodemon/badge.png)](https://coveralls.io/r/RJFryman/nodemon)
+[![Dependency Status](https://gemnasium.com/RJFryman/nodemon.png)](https://gemnasium.com/RJFryman/nodemon)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

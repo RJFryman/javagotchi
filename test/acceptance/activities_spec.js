@@ -42,7 +42,7 @@ describe('Activities', function(){
               a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
               a1.insert(function(err){
                 request(app)
-                .post('/login')
+                .post('/login/local')
                 .field('email', 'adam@nomail.com')
                 .field('password', '1234')
                 .end(function(err, res){
