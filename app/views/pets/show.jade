@@ -8,9 +8,17 @@ block pet
     h1= pet.name.toUpperCase()
 
   .row
+    .small-3.columns.text-center
+      div Mood:
+        img.peticon(src= owner.moodIcon)
+    .small-3.columns.text-center
+      div Hunger:
+        img.peticon(src= owner.hungerIcon)
     .small-3.columns
-      div#image
-        img(src= pet.image)
+    .small-3.columns
+  .row
+    .small-3.columns
+      img(src= pet.image)
     .small-4.columns
       .row
         .small-12.columns
@@ -20,7 +28,7 @@ block pet
       .row
         .small-12.columns
           h2 Status: 
-            = pet.status
+            = owner.petStatus ? owner.petStatus : pet.status
       .row
         .small-12.columns
           h2 Species: 

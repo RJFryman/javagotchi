@@ -29,7 +29,7 @@ function User(user){
   this.lastLogin = user.lastLogin? user.lastLogin : new Date();
   this.coordinate = [(user.lat * 1), (user.lng * 1)];
   this.facebookId = user.facebookId;
-  this.loginDifference = user.loginDifference? user.loginDifference : null;
+  this.loginDifference = user.loginDifference? user.loginDifference : 0;
 }
 
 User.prototype.register = function(fn){
@@ -152,9 +152,34 @@ User.deleteById = function(id, fn){
 User.prototype.loginTime = function(fn){
   var newLogin = new Date();
   var difference = (newLogin.getTime() - this.lastLogin.getTime())/60000;
-  this.loginDifference = difference;
+  this.loginDifferenceHungry += difference;
+  this.loginDifferenceRestless += difference;
   this.lastLogin = newLogin;
+  if(this.loginDifferenceHungry > 10 && this.loginDifferenceRestless > 10){
+    this.hungerIcon = '/img/peticons/hungry.jpg';
+    this.moodIcon = '/img/peticons/restless.jpg';
+    this.petStatus = 'Hungry and Restless';
+  }else if (this.loginDifferenceHungry < 10 && this.loginDifferenceRestless > 10) {
+    this.hungerIcon = '/img/peticons/full.jpg';
+    this.moodIcon = '/img/peticons/restless.jpg';
+    this.petStatus = 'Restless';
+  }else if (this.loginDifferenceHungry > (60*24) && this.loginDifferenceRestless > (60*24)){
+    this.moodIcon = '/img/peticons/dead.png';
+    this.hungerIcon = '/img/peticons/starved.jpg';
+  }else{
+    this.moodIcon = '/img/peticons/happy.jpg';
+    this.hungerIcon = '/img/peticons/full.jpg';
+    this.status = 'Happy';
+  }
   update(this, function(){
     fn(difference);
   });
+};
+
+User.prototype.resetLoginTime = function(activityName){
+  if(activityName === 'Cardio Exercise' || 'Weight Exercise'){
+    this.loginDifferenceHungry = 0;
+  }else if(activityName === 'Social'){
+    this.loginDifferenceRestless = 0;
+  }
 };

@@ -2,7 +2,7 @@
 
 var Activity = require('../models/activity');
 var Mongo = require('mongodb');
-//var User = require('../models/user');
+var User = require('../models/user');
 //var _ = require('lodash');
 
 exports.index = function(req, res){
@@ -22,8 +22,11 @@ exports.show = function(req, res){
 exports.create = function(req, res){
   req.body.userId = req.session.userId;
   var activity = new Activity(req.body);
-  activity.insert(function(){
-    res.redirect('/activities/'+activity._id.toString());
+  User.findById(req.session.userId, function(user){
+    user.resetLoginTime();
+    activity.insert(function(){
+      res.redirect('/activities/'+activity._id.toString());
+    });
   });
 };
 
