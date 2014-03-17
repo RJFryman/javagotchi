@@ -1,4 +1,5 @@
 /* jshint camelcase:false */
+/* global google:true */
 
 (function(){
 
@@ -8,6 +9,8 @@
 
   var lat;
   var lng;
+  var map;
+  var markers = [];
 
   function initialize(){
     getLocation();
@@ -19,14 +22,17 @@
     $('#locationsearch').on('click', '#searchfoursquare', searchFoursquare);
     $('#historicweather').click(toggleClassWeather);
     $('#otherlocation').click(toggleClassFoursquare);
+    $('#locationdata').on('click', '.activitydata', grabVenue);
   }
 
   function toggleClassWeather(event){
+    $('#weatherdata').empty();
     $('#historicweathersearch').toggleClass('hide');
     event.preventDefault();
   }
 
   function toggleClassFoursquare(event){
+    $('#venuetable').empty();
     $('#locationsearch').toggleClass('hide');
     event.preventDefault();
   }
@@ -41,6 +47,7 @@
     lng = location.coords.longitude;
     $('#weathersection').removeClass('hide');
     $('#locationsection').removeClass('hide');
+    initMap(lat, lng, 15);
   }
 
   function geoError(){
@@ -86,44 +93,29 @@
       $tdicon.css('background-image', 'url('+data.response.venues[i].categories[0].icon.prefix + 'bg_32' + data.response.venues[i].categories[0].icon.suffix + ')');
       var $liname = $('<li>').text(data.response.venues[i].name).addClass('venuename');
       var $liaddress = $('<li>').text(data.response.venues[i].location.address);
+      var $licitystate = $('<li>').text(data.response.venues[i].location.city+', '+data.response.venues[i].location.state+' '+data.response.venues[i].location.postalCode);
       var $ul = $('<ul>').addClass('activitydata');
-      $ul.append($liname, $liaddress);
+      $ul.append($liname, $liaddress, $licitystate);
       $tdvenue.append($ul);
-      //$tdname.text(data.response.venues[i].name);
-      //$tdaddress.text(data.response.venues[i].location.address);
       $tr.append($tdicon, $tdvenue);
       $('#venuetable').append($tr);
     }
-    /*
-    for(var j = 0; j < data.response.venues.length; j++){
-      var $liicon = $('<span>');
-      $liicon.addClass('icon');
-      $liicon.html('<img src="'+data.response.venues[j].categories[0].icon.prefix + 'bg_32' + data.response.venues[j].categories[0].icon.suffix+'">');
-      //$liicon.css('background-image', 'url('+data.response.venues[j].categories[0].icon.prefix + 'bg_32' + data.response.venues[j].categories[0].icon.suffix + ')');
-      var $liname = $('<span>');
-      $liname.text(data.response.venues[j].name + ' | ');
-      var $option = $('<option>');
-      console.log(data.response.venues[j].name);
-      var $liaddress = $('<span>');
-      $liaddress.text(data.response.venues[j].location.address);
-      //$option.text(data.response.venues[j].name);
-      $option.append($liicon, $liname, $liaddress);
-      $('#venueselect').append($option);
-    }
-    */
   }
 
   function getWeather(event){
+    $('#weatherdata').empty();
     var url = 'http://api.wunderground.com/api/c098c4de54fd58cb/conditions/q/'+lat+','+lng+'.json?callback=?';
     $.getJSON(url, populateWeather);
     event.preventDefault();
   }
 
   function getHistoricWeather(event){
+    $('#weatherdata').empty();
     var date = $('#historicdate').val().toString().replace(/-/g,''); // must be in format YYYYMMDD
     var place = $('#historicplace').val().toString(); // must be in format TX/Dallas
     var url = 'http://api.wunderground.com/api/c098c4de54fd58cb/history_'+date+'/q/'+place+'.json?callback=?';
-    $.getJSON(url, populateWeather);
+    console.log(url);
+    $.getJSON(url, populateHistoricWeather);
     event.preventDefault();
   }
 
@@ -135,6 +127,54 @@
     var $lifeelslike = $('<li>').text('Currently feels like: ' + data.current_observation.feelslike_string);
     $ul.append($liicon, $lidesc, $lifeelslike);
     $('#weatherdata').append($ul);
+  }
+
+  function populateHistoricWeather(data){
+    console.log(data);
+    var $ul = $('<ul>').addClass('activitydata');
+    var $limeantemp = $('<li>').text('Mean Temperature: '+data.history.dailysummary[0].meantempi + ' F');
+    var $limaxtemp = $('<li>').text('Max Temperature: '+data.history.dailysummary[0].maxtempi + ' F');
+    var $limintemp = $('<li>').text('Min Temperature: '+data.history.dailysummary[0].mintempi + ' F');
+    var $liprec = $('<li>').text('Precipitation: '+data.history.dailysummary[0].precipi);
+    $ul.append($limeantemp, $limaxtemp, $limintemp, $liprec);
+    $('#weatherdata').append($ul);
+  }
+
+  function initMap(lat, lng, zoom){
+    var mapOptions = {center: new google.maps.LatLng(lat, lng), zoom: zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var loca = {lat:lat, lng:lng, address:'Current Location'};
+    addMarker(loca);
+  }
+
+  function addMarker(loca){
+    var position = new google.maps.LatLng(loca.lat, loca.lng);
+    var marker = new google.maps.Marker({map:map, position:position, title:loca.address});
+    markers.push(marker);
+  }
+
+  function grabVenue(){
+    var icon = $(this).parent().siblings('.icon').attr('style').replace('background-image: url(', '').replace(');','');
+    console.log(icon);
+    var venuename = $(this).find('.venuename').text();
+    var venueaddress = $(this).find('.venuename').siblings('li:nth-child(2)').text();
+    var venuecitystate = $(this).find('.venuename').siblings('li:nth-child(3)').text();
+    var currentvenue = {icon:icon, venuename:venuename, venueaddress:venueaddress, venuecitystate:venuecitystate};
+    $('#venuetable').empty();
+    var $tr = $('<tr>');
+    var $tdicon = $('<td>');
+    var $tdvenue = $('<td>');
+    $tdicon.addClass('icon');
+    $tdicon.css('background-image', 'url('+icon+')');
+    var $liname = $('<li>').text(venuename);
+    var $liaddress = $('<li>').text(venueaddress);
+    var $licitystate = $('<li>').text(venuecitystate);
+    var $ul = $('<ul>').addClass('activitydata');
+    $ul.append($liname, $liaddress, $licitystate);
+    $tdvenue.append($ul);
+    $tr.append($tdicon, $tdvenue);
+    $('#venuetable').append($tr);
+    console.log(currentvenue);
   }
 
 })();

@@ -1,5 +1,8 @@
 extends ../shared/template
 
+block less
+  link(rel='stylesheet', href='/less/activity.css')
+
 block content
   h1= title
 
@@ -21,6 +24,16 @@ block content
                 option Socializing
                 option Hiking
                 option Swimming
+                option Programming
+                option Reading
+                option Eating
+              label Activity Duration
+              select
+                option 5 minutes
+                option 30 minutes
+                option 1 hour
+                option 2 hours
+                option > 2 hours
               label Description
               textarea#description(name='description', placeholder='Had a totally awesome time')
               input(type='hidden', name='userId')
@@ -33,7 +46,7 @@ block content
                 label Select Date
                 input(type='date', name='date')#historicdate
                 label Enter Location
-                input(type='text', name='location', placeholder='TX/Dallas')#historicplace
+                input(type='text', name='location', placeholder='TN/Nashville')#historicplace
                 button#gethistoricweather.radius.tiny Get Weather
               #weatherdata
             .small-4.columns.hide#locationsection
@@ -48,10 +61,14 @@ block content
                 button#searchfoursquare.radius.tiny Search Locations
               //select#venueselect
               #locationdata
-
+          .row
+            .small-12.columns
+              #map
           .row
             .small-4.columns
+              label &nbsp
               button.radius.small Add Activity
 
 block scripts
   script(src='/js/source/activity.js')
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD7SHoaSpx_SkDf3Qr3MSza5U3qtnEhATw&sensor=true')
