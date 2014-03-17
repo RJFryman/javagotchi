@@ -35,7 +35,6 @@ describe('Pet', function(){
       expect(p1.species).to.equal('Dragon');
       expect(p1.role).to.equal('Wizard');
       expect(p1.userId.toString()).to.deep.equal(u1._id.toString());
-      
     });
   });
 
@@ -53,6 +52,7 @@ describe('Pet', function(){
         expect(p1.constitution).to.equal(11);
         expect(p1.intelligence).to.equal(10);
         expect(p1.wisdom).to.equal(14);
+        expect(p1.image).to.equal('/img/pets/wizardDragon.jpg');
         expect(p1._id).to.be.instanceof(Mongo.ObjectID);
         done();
       });
