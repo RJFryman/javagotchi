@@ -57,6 +57,8 @@ describe('Activities', function(){
     });
   });
 
+//--------------------- AUTHORIZED -----------------------//
+
   describe('GET /activities', function(){
     it('should render the activities index', function(done){
       request(app)
@@ -83,8 +85,6 @@ describe('Activities', function(){
       .expect(200, done);
     });
   });
-
-//--------------------- AUTHORIZED -----------------------//
 
   describe('POST /activities', function(){
     it('should create an activity and redirect to the activities show page', function(done){
