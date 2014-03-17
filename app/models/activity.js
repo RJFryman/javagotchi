@@ -12,6 +12,7 @@ function Activity(activity){
   this.completed = activity.completed ? activity.completed : false;
   this.userId = new Mongo.ObjectID(activity.userId);
   this.date = new Date(activity.date);
+  this.dateCreated = activity.dateCreated ? activity.dateCreated : new Date();
   this.category = activity.category;
   this.description = activity.description;
   this.nodemonId = Mongo.ObjectID(activity.nodemonId);

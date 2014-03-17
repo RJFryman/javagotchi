@@ -3,37 +3,55 @@ extends ../shared/template
 block content
   h1= title
 
-  form
-    fieldset
-      legend Add An Activity
-      label Title
-      input(type='text', name='name', autofocus='true', placeholder='Walk with my Dragon')
-      label Date
-      input(type='date', name='date')
-      label Category
-      select
-        option Swimming
-        option Walking
-        option Running
-        option Socializing
-        option Hiking
-      label Description
-      textarea#description(name='description', placeholder='Had a totally awesome time')
-      input(type='hidden', name='userId')
-      input(type='hidden', name='nodemonId')
-      button.radius.small Add Activity
-      button#queryfoursquare.radius.small Query Foursquare
+  .row
+    .small-12.columns
+      form
+        fieldset
+          legend Add An Activity
+          .row
+            .small-4.columns
+              label Title
+              input(type='text', name='name', autofocus='true', placeholder='Walk with my Dragon')
+              label Date
+              input(type='date', name='date')
+              label Category
+              select
+                option Walking
+                option Running
+                option Socializing
+                option Hiking
+                option Swimming
+              label Description
+              textarea#description(name='description', placeholder='Had a totally awesome time')
+              input(type='hidden', name='userId')
+              input(type='hidden', name='nodemonId')
+            .small-4.columns.hide#weathersection
+              label Add Weather Information To This Activity
+              button#queryweather.radius.tiny Get Current Weather
+              button#historicweather.radius.tiny Get Historic Weather
+              #historicweathersearch.hide
+                label Select Date
+                input(type='date', name='date')#historicdate
+                label Enter Location
+                input(type='text', name='location', placeholder='TX/Dallas')#historicplace
+                button#gethistoricweather.radius.tiny Get Weather
+              #weatherdata
+            .small-4.columns.hide#locationsection
+              label Add A Location To This Activity
+              button#queryfoursquare.radius.tiny Get Current Location
+              button#otherlocation.radius.tiny Search Locations
+              #locationsearch.hide
+                label Search Name
+                input(type='text', name='date', placeholder='Chipotle')#searchlocation
+                label Enter Location
+                input(type='text', name='location', placeholder='Dallas, TX')#citystate
+                button#searchfoursquare.radius.tiny Search Locations
+              //select#venueselect
+              #locationdata
 
-      .row
-        select#venueselect
-
-      .row
-        table
-          thead
-            th
-            th Venue Name
-            th Venue Address
-          tbody#venues
+          .row
+            .small-4.columns
+              button.radius.small Add Activity
 
 block scripts
   script(src='/js/source/activity.js')
