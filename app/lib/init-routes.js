@@ -25,7 +25,7 @@ function load(app, fn){
     done(null, obj);
   });
 
-  passport.use(new FacebookStrategy({clientID: '309439962542948', clientSecret: 'e28ecd5f50aac0d75fdf9578ccf71240', callbackURL: 'http://192.168.1.124:4000/auth/facebook/callback'},
+  passport.use(new FacebookStrategy({clientID: '309439962542948', clientSecret: 'e28ecd5f50aac0d75fdf9578ccf71240', callbackURL: 'http://192.168.11.199:4000/auth/facebook/callback'},
         function(accessToken, refreshToken, profile, done){
           process.nextTick(function(){
             User.findByFacebookId(profile.id, function(user){
