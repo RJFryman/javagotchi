@@ -16,9 +16,9 @@ function Activity(activity){
   this.description = activity.description;
   this.nodemonId = Mongo.ObjectID(activity.nodemonId);
   this.duration = activity.duration;
-  this.currentweather = JSON.parse(activity.currentweather);
+  this.currentweather = activity.currentweather ? JSON.parse(activity.currentweather) : null;
   this.historicweather = activity.historicweather ? JSON.parse(activity.historicweather) : null;
-  this.location = JSON.parse(activity.location);
+  this.location = activity.location ? JSON.parse(activity.location) : null;
 }
 
 Activity.prototype.insert = function(fn){
