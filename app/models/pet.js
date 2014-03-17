@@ -33,7 +33,7 @@ function assignImage(species, role, fn){
   }else if(species === 'Lion' && role === 'Ninja'){
     fn('/img/pets/ninjaLion.jpg');
   }else if(species === 'Robot' && role === 'Ninja'){
-    fn('/img/pets/ninjaRobotjpg');
+    fn('/img/pets/ninjaRobot.jpg');
   }else if(species === 'Shark' && role === 'Ninja'){
     fn('/img/pets/ninjaShark.jpg');
   }else if(species === 'Alien' && role === 'Paladin'){

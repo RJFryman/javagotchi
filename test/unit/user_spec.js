@@ -150,5 +150,19 @@ describe('User', function(){
     });
   });
 
+  describe('#loginTime', function(){
+    it('should find the difference between login times and update lastLogin', function(done){
+      var lastLogin = new Date();
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', lastLogin:lastLogin, nodeBucks:'5', lat:'0', lng:'0'});
+      u2.register(function(){
+        u2.loginTime(function(difference){
+          expect(difference).to.not.equal(0);
+          expect(u2.lastLogin).to.not.equal(lastLogin);
+          done();
+        });
+      });
+    });
+  });
+
 
 });

@@ -21,7 +21,7 @@ block content
             h4 Your last login was at #{showUser.lastLogin.getUTCHours()}:#{showUser.lastLogin.getUTCMinutes()} on #{showUser.lastLogin.getUTCMonth()+1}/#{showUser.lastLogin.getUTCDate()}/#{showUser.lastLogin.getUTCFullYear()}.
             div#nodebucksbox
               h4 #{showUser.nodeBucks.toString()}
-            h4= time 
+            h4= showUser.loginDifference 
       .row#petBox
         .small-12.columns
           if pets.length > 0

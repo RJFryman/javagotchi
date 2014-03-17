@@ -104,7 +104,7 @@ describe('user', function(){
   });
 
   describe('POST /login/local', function(){
-    it('should login a new user', function(done){
+    it('should login a new user and update lastLogin', function(done){
       request(app)
       .post('/login/local')
       .field('email', 'sami1@nomail.com')
