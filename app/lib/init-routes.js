@@ -55,6 +55,7 @@ function load(app, fn){
   });
   app.get('/register', d, users.fresh);
   app.post('/register', d, users.create);
+  app.post('/address/:id', d, users.address);
   app.get('/login', d, users.login);
   app.post('/login', d, passport.authenticate('local', {successRedirect:'/', failureRedirect:'/login'}));
   app.post('/login/local', d, users.authenticate);
