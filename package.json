@@ -26,9 +26,7 @@
     "express-session": "*",
     "passport":        "*",
     "passport-local":  "*",
-    "passport-facebook": "*",
-    "connect-flash":   "*",
-    "agenda":          "*"
+    "passport-facebook": "*"
   },
   "devDependencies": {
     "grunt":                "*",
