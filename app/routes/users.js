@@ -3,13 +3,13 @@
 var User = require('../models/user');
 var Pet = require('../models/pet');
 var Activity = require('../models/activity');
+var time;
 
 exports.fresh = function(req, res){
   res.render('users/fresh', {title: 'Register User'});
 };
 
 exports.address = function(req, res){
-  console.log('XXXXXX', req.body.lat, 'YYYYY', req.body.lng);
   User.findById(req.params.id, function(user){
     user.addAddress(req.body.lat, req.body.lng, function(){
       user.update(function(){
@@ -43,16 +43,19 @@ exports.create = function(req, res){
 };
 
 exports.login = function(req, res){
-  res.render('users/login', {title: 'Login User'});
+  res.render('users/login', {title: 'Login User', time:time});
 };
 
 exports.authenticate = function(req, res){
   User.findByEmailAndPassword(req.body.email, req.body.password, function(user){
     if(user){
-      req.session.regenerate(function(){
-        req.session.userId = user._id;
-        req.session.save(function(){
-          res.redirect('/users/'+req.session.userId.toString());
+      user.loginTime(function(difference){
+        console.log('yoyoyoyo'+difference);
+        req.session.regenerate(function(){
+          req.session.userId = user._id;
+          req.session.save(function(){
+            res.redirect('/users/'+req.session.userId.toString());
+          });
         });
       });
     }else{
@@ -71,7 +74,7 @@ exports.show = function(req, res){
   User.findById(req.params.id, function(showUser){
     Pet.findByUserId(req.params.id, function(pets){
       Activity.findByUserId(req.params.id, function(activities){
-        res.render('users/show', {showUser:showUser, activities:activities, pets:pets});
+        res.render('users/show', {title: showUser.name, time:time, showUser:showUser, activities:activities, pets:pets});
       });
     });
   });

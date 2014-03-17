@@ -32,10 +32,10 @@ describe('user', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
-        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
+        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234'});
         inUser.register(function(){
           request(app)
-          .post('/login/local')
+          .post('/login')
           .field('email', 'sami1@nomail.com')
           .field('password', '1234')
           .end(function(err, res){
@@ -55,6 +55,14 @@ describe('user', function(){
     });
   });
 
+  describe('GET /register', function(){
+    it('should display the register page', function(done){
+      request(app)
+      .get('/register')
+      .expect(200, done);
+    });
+  });
+
   describe('POST /register', function(){
     it('should allow a user to register', function(done){
       var filename = __dirname + '/../fixtures/testfile-copy.jpg';
@@ -63,9 +71,6 @@ describe('user', function(){
       .field('name', 'Sam Tes')
       .field('email', 'sam@nomail.com')
       .field('password', '1235')
-      .field('nodeBucks', '5')
-      .field('lat', '0')
-      .field('lng', '0')
       .attach('pic', filename)
       .end(function(err, res){
         expect(res.status).to.equal(302);
@@ -80,9 +85,6 @@ describe('user', function(){
       .field('name', 'Sam Tes')
       .field('email', 'sami1@nomail.com')
       .field('password', '1235')
-      .field('nodeBucks', '5')
-      .field('lat', '0')
-      .field('lng', '0')
       .attach('pic', filename)
       .end(function(err, res){
         expect(res.status).to.equal(200);
@@ -104,7 +106,7 @@ describe('user', function(){
   });
 
   describe('POST /login/local', function(){
-    it('should login a new user', function(done){
+    it('should login a new user and update lastLogin', function(done){
       request(app)
       .post('/login/local')
       .field('email', 'sami1@nomail.com')

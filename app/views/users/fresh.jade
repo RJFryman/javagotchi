@@ -2,28 +2,27 @@ extends ../shared/template
 
 block content
   #regform
-
     #wrapper
       .row
-        .small-12.columns
-          .row
-            .small-6.columns
-              form(method='post', action='/register', enctype='multipart/form-data')
-                fieldset
-                  legend=title
-                  label Name
-                  input(type='text', name='name', autofocus=true, required=true)
-                  label Email
-                  input(type='email', name='email', required=true)
-                  label Password
-                  input(type='password', name='password', required=true)
-                  label Profile Picture
-                  input(type='file', name='pic')
-                  button.radius.small.expand Create
-    #wrapper2
-      .row
-        .small-6.coulmns
-          h3 facebook
+        .small-6.columns
+          form(method='post', action='/register', enctype='multipart/form-data')
+            fieldset
+              legend=title
+              label Name
+              input(type='text', name='name', autofocus=true, required=true)
+              label Email
+              input(type='email', name='email', required=true)
+              label Password
+              input(type='password', name='password', required=true)
+              label Profile Picture
+              input(type='file', name='pic')
+              button.radius.small.expand Create
+        .small-1.columns
+          #orBox OR
+        .small-5.columns
+          #fbBox
+            a(href='/auth/facebook')#fbLogin
+              img(src='/img/icons/fblogin.png')
 
 block less
-  link(rel='stylesheet', href='/less/users.css')
+  link(rel='stylesheet', href='/less/reg.css')

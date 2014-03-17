@@ -29,9 +29,9 @@ block content
         .small-12.columns
           h1#username= showUser.name
           if user._id.toString() === showUser._id.toString()
-            h4 Your last login was at #{showUser.lastLogin.getUTCHours()}:#{showUser.lastLogin.getUTCMinutes()} on #{showUser.lastLogin.getUTCMonth()}/#{showUser.lastLogin.getUTCDate()}/#{showUser.lastLogin.getUTCFullYear()}.
             div#nodebucksbox
               h4 #{showUser.nodeBucks.toString()}
+            h4= showUser.loginDifference 
       .row#petBox
         .small-12.columns
           if pets.length > 0
@@ -46,13 +46,13 @@ block content
                     td= pet.species
                   tr
                     td Class
-                    td= pet.class
+                    td= pet.role
                   tr
                     td Status
                     td= pet.status
           if pets.length === 0 && user._id.toString() === showUser._id.toString()
             a(href='/pets/new')
-              button.alert#getPet Welcome to Nod&#233;Mon! Click here to get your first pet!
+              button.alert#getPet Welcome to Nod&#233;Mon! Click here to get your first companion!
 
 block less
   link(rel='stylesheet', href='/less/users.css')

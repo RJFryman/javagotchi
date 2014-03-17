@@ -15,7 +15,7 @@ exports.new = function(req, res){
 
 exports.show = function(req, res){
   Activity.findById(req.params.id, function(activity){
-    res.render('activities/show', {activity:activity});
+    res.render('activities/show', {title: activity.name, activity:activity});
   });
 };
 
@@ -48,4 +48,3 @@ exports.update = function(req, res){
     }
   });
 };
-

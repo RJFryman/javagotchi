@@ -20,7 +20,7 @@ function Pet(data){
   this.userId = Mongo.ObjectID(data.userId);
   this.strength = data.strength;
   this.dexterity = data.dexterity;
-  this.constituition = data.constitution;
+  this.constitution = data.constitution;
   this.intelligence = data.intelligence;
   this.wisdom = data.wisdom;
 }
@@ -33,7 +33,7 @@ function assignImage(species, role, fn){
   }else if(species === 'Lion' && role === 'Ninja'){
     fn('/img/pets/ninjaLion.jpg');
   }else if(species === 'Robot' && role === 'Ninja'){
-    fn('/img/pets/ninjaLion.jpg');
+    fn('/img/pets/ninjaRobot.jpg');
   }else if(species === 'Shark' && role === 'Ninja'){
     fn('/img/pets/ninjaShark.jpg');
   }else if(species === 'Alien' && role === 'Paladin'){
@@ -74,6 +74,8 @@ function assignImage(species, role, fn){
     fn('/img/pets/wizardLion.jpg');
   }else if(species === 'Shark' && role === 'Wizard'){
     fn('/img/pets/wizardShark.jpg');
+  }else if(species === 'Robot' && role === 'Wizard'){
+    fn('/img/pets/wizardRobot.jpg');
   }
 }
 
@@ -183,35 +185,35 @@ function assignStats(species, role, fn){
     intelligence = 9;
     wisdom = 6;
     fn(strength, dexterity, constitution, intelligence, wisdom);
-  }else if(species === 'Tiger' && role === 'Wizard'){
+  }else if(species === 'Lion' && role === 'Wizard'){
     strength = 7;
     dexterity = 11;
     constitution = 8;
     intelligence = 12;
     wisdom = 12;
     fn(strength, dexterity, constitution, intelligence, wisdom);
-  }else if(species === 'Tiger' && role === 'Pirate'){
+  }else if(species === 'Lion' && role === 'Pirate'){
     strength = 11;
     dexterity = 13;
     constitution = 7;
     intelligence = 9;
     wisdom = 10;
     fn(strength, dexterity, constitution, intelligence, wisdom);
-  }else if(species === 'Tiger' && role === 'Ninja'){
+  }else if(species === 'Lion' && role === 'Ninja'){
     strength = 8;
     dexterity = 14;
     constitution = 6;
     intelligence = 11;
     wisdom = 11;
     fn(strength, dexterity, constitution, intelligence, wisdom);
-  }else if(species === 'Tiger' && role === 'Vampire'){
+  }else if(species === 'Lion' && role === 'Vampire'){
     strength = 9;
     dexterity = 10;
     constitution = 9;
     intelligence = 13;
     wisdom = 9;
     fn(strength, dexterity, constitution, intelligence, wisdom);
-  }else if(species === 'Tiger' && role === 'Paladin'){
+  }else if(species === 'Lion' && role === 'Paladin'){
     strength = 10;
     dexterity = 12;
     constitution = 10;
