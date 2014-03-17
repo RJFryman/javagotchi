@@ -30,13 +30,14 @@ function User(user){
   this.loginDifference = user.loginDifference? user.loginDifference : null;
 }
 
-User.prototype.register = function(path, fn){
+User.prototype.register = function(picpath, fn){
   var self = this;
 
   hashPassword(self.password, function(hashedPwd){
     self.password = hashedPwd;
-    if(path){
-      addPic(path, function(newpath){
+    if(path.extname(picpath)){
+      console.log(picpath);
+      addPic(picpath, function(newpath){
         self.pic = newpath;
       });
     }
@@ -61,7 +62,7 @@ function addPic(oldpath, fn){
   var filename = path.basename(oldpath);
   var abspath = __dirname + '/../static';
   var relpath = '/img/users/' + filename;
-
+  console.log(oldpath);
   fs.renameSync(oldpath, abspath+relpath);
 
   fn(relpath);

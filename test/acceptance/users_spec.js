@@ -33,7 +33,7 @@ describe('user', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
         inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234'});
-        inUser.register(function(){
+        inUser.register('', function(){
           request(app)
           .post('/login')
           .field('email', 'sami1@nomail.com')
@@ -143,6 +143,15 @@ describe('user', function(){
     });
   });
 
+  describe('GET /users/:id', function(){
+    it('should redirect to the show page', function(done){
+      request(app)
+      .get('/users/'+ inUser._id)
+      .set('cookie', cookie)
+      .expect(302, done);
+    });
+  });
+
   describe('POST /logout', function(){
     it('should log a user out of the app', function(done){
       request(app)
@@ -151,12 +160,4 @@ describe('user', function(){
     });
   });
 
-  describe('GET /users/:id', function(){
-    it('should redirect to the show page', function(done){
-      request(app)
-      .get('/users/'+ inUser._id)
-      .set('cookie', cookie)
-      .expect(200, done);
-    });
-  });
 });
