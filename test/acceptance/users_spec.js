@@ -55,6 +55,14 @@ describe('user', function(){
     });
   });
 
+  describe('GET /register', function(){
+    it('should display the register page', function(done){
+      request(app)
+      .get('/register')
+      .expect(200, done);
+    });
+  });
+
   describe('POST /register', function(){
     it('should allow a user to register', function(done){
       var filename = __dirname + '/../fixtures/testfile-copy.jpg';

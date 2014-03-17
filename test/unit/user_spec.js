@@ -51,9 +51,9 @@ describe('User', function(){
 
   describe('register', function(){
     it('should register user', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
+      var u1 = new User({name: 'Sam', email:'robert.fryman@gmail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
       u1.register(function(){
-        expect(u1.email).to.equal('sam@nomail.com');
+        expect(u1.email).to.equal('robert.fryman@gmail.com');
         expect(u1.password).to.have.length(60);
         expect(u1.nodeBucks).to.equal(5);
         expect(u1.name).to.equal('Sam');
@@ -88,6 +88,18 @@ describe('User', function(){
     });
   });
 
+  describe('deleteById', function(){
+    it('should delete a user', function(done){
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
+      u1.register(function(){
+        User.deleteById(u1._id.toString(), function(count){
+          expect(count).to.equal(1);
+          done();
+        });
+      });
+    });
+  });
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FIND METHODS >>>>>>>>>>>>>>>>>>>>>>>>>>
 
   describe('.findById', function(){
@@ -104,6 +116,19 @@ describe('User', function(){
       });
     });
   });
+
+  describe('.findByFacebookId', function(){
+    it('should find a user', function(done){
+      var u1 = new User({facebookId:'1234', name: 'Sam', email:'sam@nomail.com', password:'1234', lat: '0', lng:'0'});
+      u1.register(function(){
+        User.findByFacebookId('1234', function(record){
+          expect(record.name).to.equal('Sam');
+          done();
+        });
+      });
+    });
+  });
+
 
   describe('.findByEmailAndPassword', function(){
     it('should find a user', function(done){
