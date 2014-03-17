@@ -2,7 +2,7 @@
 
 var Activity = require('../models/activity');
 var Mongo = require('mongodb');
-//var User = require('../models/user');
+var Pet = require('../models/pet');
 //var _ = require('lodash');
 
 exports.index = function(req, res){
@@ -23,7 +23,11 @@ exports.create = function(req, res){
   req.body.userId = req.session.userId;
   var activity = new Activity(req.body);
   activity.insert(function(){
-    res.redirect('/activities/'+activity._id.toString());
+    Pet.findById(req.body.nodemonId, function(pet){
+      pet.levelUp(req.body.category, req.body.duration, function(err){
+        res.redirect('/activities/'+activity._id.toString());
+      });
+    });
   });
 };
 

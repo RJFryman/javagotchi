@@ -22,11 +22,9 @@ html(class='no-js', lang='en')
         ul.left
         ul.right
           if user
-            li: a(href="/pets") Companions
+            li: a(href="/pets") Companion Leaderboard
             li.divider
             li: a(href="/pets/new") New Companion
-            li.divider
-            li: a(href="/activities/index") Activities
             li.divider
             li: a(href="/activities/new") New Activity
             li.divider
@@ -49,4 +47,3 @@ html(class='no-js', lang='en')
     script(src='/js/vendor/moment.js')
     script(src='/js/source/main.js')
     block script
-
