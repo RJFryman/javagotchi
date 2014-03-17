@@ -26,9 +26,10 @@ function User(user){
   this.password = user.password;
   this.pic = user.pic ? user.pic : null;
   this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
-  this.lastLogin = new Date();
+  this.lastLogin = user.lastLogin? user.lastLogin : new Date();
   this.coordinate = [(user.lat * 1), (user.lng * 1)];
   this.facebookId = user.facebookId;
+  this.loginDifference = user.loginDifference? user.loginDifference : null;
 }
 
 User.prototype.register = function(fn){
@@ -81,7 +82,7 @@ User.findByEmailAndPassword = function(email, password, fn){
     if(user){
       bcrypt.compare(password, user.password, function(err, result){
         if(result){
-          fn(user);
+          fn(_.extend(user, User.prototype));
         }else{
           fn();
         }
@@ -148,3 +149,12 @@ User.deleteById = function(id, fn){
   });
 };
 
+User.prototype.loginTime = function(fn){
+  var newLogin = new Date();
+  var difference = (newLogin.getTime() - this.lastLogin.getTime())/60000;
+  this.loginDifference = difference;
+  this.lastLogin = newLogin;
+  update(this, function(){
+    fn(difference);
+  });
+};
