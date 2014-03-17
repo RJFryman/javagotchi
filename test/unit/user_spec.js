@@ -58,8 +58,6 @@ describe('User', function(){
         expect(u1.nodeBucks).to.equal(5);
         expect(u1.name).to.equal('Sam');
         expect(u1._id.toString()).to.have.length(24);
-        body = JSON.parse(body);
-        expect(body.id).to.be.ok;
         done();
       });
     });
