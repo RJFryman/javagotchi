@@ -1,0 +1,38 @@
+@bg-color: #FFFFFF;
+@rand1: `Math.floor(Math.random()*256)`;
+@rand2: `Math.floor(Math.random()*256)`;
+@rand3: `Math.floor(Math.random()*256)`;
+@import url(http://fonts.googleapis.com/css?family=Griffy);
+@import url(http://fonts.googleapis.com/css?family=Della+Respira);
+
+/*
+body{
+  background: @bg-color url('/img/icons/homebg.png') no-repeat;
+  background-position: left bottom;
+  background-size: 30%;
+}
+*/
+
+#wrapper h1{
+  font-family: 'Griffy', cursive;
+  text-align: center;
+  font-size: 4em;
+  color: rgb(@rand1, @rand2, @rand3);
+}
+
+#wrapper h3{
+  font-family: 'Griffy', cursive;
+  text-align: center;
+  color: rgb(@rand2, @rand3, @rand1);
+}
+
+#wrapper p{
+  font-family: 'Della Respira', serif;
+  line-height: 1.5em;
+  margin: 5px;
+}
+
+#wrapper p:first-letter{
+  font-family: 'Griffy', serif;
+  font-size: 2em;
+}
