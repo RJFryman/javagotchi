@@ -52,7 +52,7 @@ describe('User', function(){
   describe('register', function(){
     it('should register user', function(done){
       var u1 = new User({name: 'Sam', email:'robert.fryman@gmail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
-      u1.register(function(err, body){
+      u1.register(function(){
         expect(u1.email).to.equal('robert.fryman@gmail.com');
         expect(u1.password).to.have.length(60);
         expect(u1.nodeBucks).to.equal(5);
