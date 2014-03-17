@@ -5,7 +5,6 @@ var _ = require('lodash');
 //var users = global.nss.db.collection('users');
 var activities = global.nss.db.collection('activities');
 var Mongo = require('mongodb');
-var foursquare = (require('foursquarevenues'))('CEOFOL4IRP2KFPAVY5AR2OF4FUC15HCTE4DALXIVGDTG24N1', 'BHCBDXVPSAQBGCAJGEYCT13JMW2V3SJYRFGTBPJVSK4Q0EWX');
 
 function Activity(activity){
   this.name = activity.name;
@@ -91,21 +90,4 @@ Activity.find = function(query, fn){
   activities.find(filter, {sort:sort, skip:skip, limit:limit}).toArray(function(err, records){
     fn(records);
   });
-};
-
-Activity.findVenueFromFoursquare = function(params, fn){
-
-//  var params = {'ll': '40.7, -74'};
-
-  foursquare.getVenues(params, function(error, venues){
-    if(!error){
-      fn(venues);
-    }
-  });
-
-//  foursquare.exploreVenue(params, function(error, venues){
-//    if(!error){
-//      fn(venues);
-//    }
-//  });
 };
