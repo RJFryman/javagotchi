@@ -33,12 +33,12 @@ describe('Activity', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
-        u1 = new User({name:'Adam Thede', email:'adam@nomail.com', password:'1234', nodeBucks:'100'});
-        u2 = new User({name:'Robert Fryman', email:'robert@nomail.com', password:'4567', nodeBucks:'50'});
-        u3 = new User({name:'Nat Webb', email:'nat@nomail.com', password:'abcd', nodeBucks:'25'});
-        u1.register(function(){
-          u2.register(function(){
-            u3.register(function(){
+        u1 = new User({name:'Adam Thede', email:'adam@nomail.com', password:'1234'});
+        u2 = new User({name:'Robert Fryman', email:'robert@nomail.com', password:'4567'});
+        u3 = new User({name:'Nat Webb', email:'nat@nomail.com', password:'abcd'});
+        u1.register('', function(){
+          u2.register('', function(){
+            u3.register('', function(){
               done();
             });
           });

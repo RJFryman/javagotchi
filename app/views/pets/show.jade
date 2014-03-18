@@ -7,6 +7,56 @@ block pet
   #wrapper
     h1= pet.name.toUpperCase()
 
+  .row
+    .small-3.columns.text-center
+      div Mood:
+        img.peticon(src= owner.moodIcon)
+    .small-3.columns.text-center
+      div Hunger:
+        img.peticon(src= owner.hungerIcon)
+    .small-3.columns
+    .small-3.columns
+  .row
+    .small-3.columns
+      img(src= pet.image)
+    .small-4.columns
+      .row
+        .small-12.columns
+          h2 Owner: 
+            a(href='/users/'+pet.userId)
+              = owner.name
+      .row
+        .small-12.columns
+          h2 Status: 
+            = owner.petStatus ? owner.petStatus : pet.status
+      .row
+        .small-12.columns
+          h2 Species: 
+            = pet.species
+      .row
+        .small-12.columns
+          h2 Role: 
+            = pet.role
+    .small-5.columns
+
+  .row
+    .small-2.columns.text-center
+      h3.stats Strength
+      p= pet.strength
+    .small-2.columns.text-center
+      h3.stats Dexterity
+      p= pet.dexterity
+    .small-2.columns.text-center
+      h3.stats Constitution
+      p= pet.constitution
+    .small-2.columns.text-center
+      h3.stats Intelligence
+      p= pet.intelligence
+    .small-2.columns.text-center
+      h3.stats Wisdom
+      p= pet.wisdom
+    .small-2.columns.text-center
+
     .row#petBox
       .small-3.columns
         div#image
@@ -43,3 +93,4 @@ block pet
           .statBox
             h3.stats Wisdom
             p= pet.wisdom
+>>>>>>> 95cf33cd041a9f429644ff022a5d8758e740af5c

@@ -32,10 +32,10 @@ describe('user', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile1));
       global.nss.db.dropDatabase(function(err, result){
-        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
-        inUser.register(function(){
+        inUser = new User({name:'Samuel', email:'sami1@nomail.com', password:'1234'});
+        inUser.register('', function(){
           request(app)
-          .post('/login/local')
+          .post('/login')
           .field('email', 'sami1@nomail.com')
           .field('password', '1234')
           .end(function(err, res){
@@ -71,9 +71,6 @@ describe('user', function(){
       .field('name', 'Sam Tes')
       .field('email', 'sam@nomail.com')
       .field('password', '1235')
-      .field('nodeBucks', '5')
-      .field('lat', '0')
-      .field('lng', '0')
       .attach('pic', filename)
       .end(function(err, res){
         expect(res.status).to.equal(302);
@@ -88,9 +85,6 @@ describe('user', function(){
       .field('name', 'Sam Tes')
       .field('email', 'sami1@nomail.com')
       .field('password', '1235')
-      .field('nodeBucks', '5')
-      .field('lat', '0')
-      .field('lng', '0')
       .attach('pic', filename)
       .end(function(err, res){
         expect(res.status).to.equal(200);
@@ -149,6 +143,15 @@ describe('user', function(){
     });
   });
 
+  describe('GET /users/:id', function(){
+    it('should redirect to the show page', function(done){
+      request(app)
+      .get('/users/'+ inUser._id)
+      .set('cookie', cookie)
+      .expect(302, done);
+    });
+  });
+
   describe('POST /logout', function(){
     it('should log a user out of the app', function(done){
       request(app)
@@ -157,12 +160,4 @@ describe('user', function(){
     });
   });
 
-  describe('GET /users/:id', function(){
-    it('should redirect to the show page', function(done){
-      request(app)
-      .get('/users/'+ inUser._id)
-      .set('cookie', cookie)
-      .expect(200, done);
-    });
-  });
 });

@@ -30,7 +30,7 @@ app.use(express.cookieParser());
 app.use(express.session({
   store : new RedisStore({host: 'localhost', port: 6379}),
   secret: 'gottacatchemallornotwhatever',
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }
+  cookie: { maxAge: 10 * 60 * 1000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

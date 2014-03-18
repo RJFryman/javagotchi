@@ -3,6 +3,7 @@
 var Activity = require('../models/activity');
 var Pet = require('../models/pet');
 var Mongo = require('mongodb');
+//var User = require('../models/user');
 var Pet = require('../models/pet');
 //var _ = require('lodash');
 

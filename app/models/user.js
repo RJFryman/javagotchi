@@ -24,22 +24,21 @@ function User(user){
   this.name = user.name;
   this.email = user.email || '';
   this.password = user.password;
-  this.pic = user.pic ? user.pic : null;
   this.nodeBucks = user.nodeBucks ? user.nodeBucks * 1 : 100;
   this.lastLogin = user.lastLogin? user.lastLogin : new Date();
-  this.coordinate = [(user.lat * 1), (user.lng * 1)];
   this.facebookId = user.facebookId;
-  this.loginDifference = user.loginDifference? user.loginDifference : null;
+  this.loginDifference = user.loginDifference? user.loginDifference : 0;
 }
 
-User.prototype.register = function(fn){
+User.prototype.register = function(picpath, fn){
   var self = this;
 
   hashPassword(self.password, function(hashedPwd){
     self.password = hashedPwd;
-    if(self.pic){
-      addPic(self.pic, function(path){
-        self.pic = path;
+    if(path.extname(picpath)){
+      console.log(picpath);
+      addPic(picpath, function(newpath){
+        self.pic = newpath;
       });
     }
     insert(self, function(err){
@@ -54,11 +53,16 @@ User.prototype.register = function(fn){
   });
 };
 
+User.prototype.addAddress = function(lat, lng, fn){
+  this.coordinate = [(lat * 1), (lng * 1)];
+  fn();
+};
+
 function addPic(oldpath, fn){
   var filename = path.basename(oldpath);
   var abspath = __dirname + '/../static';
   var relpath = '/img/users/' + filename;
-
+  console.log(oldpath);
   fs.renameSync(oldpath, abspath+relpath);
 
   fn(relpath);
@@ -67,7 +71,7 @@ function addPic(oldpath, fn){
 User.findById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   users.findOne({_id:_id}, function(err, record){
-    fn(record);
+    fn(_.extend(record, User.prototype));
   });
 };
 
@@ -117,6 +121,12 @@ function update(user, fn){
   });
 }
 
+User.prototype.update = function(fn){
+  users.update({_id:this._id}, this, function(err, count){
+    fn(err);
+  });
+};
+
 function hashPassword(password, fn){
   bcrypt.hash(password, 8, function(err, hash){
     fn(hash);
@@ -152,9 +162,34 @@ User.deleteById = function(id, fn){
 User.prototype.loginTime = function(fn){
   var newLogin = new Date();
   var difference = (newLogin.getTime() - this.lastLogin.getTime())/60000;
-  this.loginDifference = difference;
+  this.loginDifferenceHungry += difference;
+  this.loginDifferenceRestless += difference;
   this.lastLogin = newLogin;
+  if(this.loginDifferenceHungry > 10 && this.loginDifferenceRestless > 10){
+    this.hungerIcon = '/img/peticons/hungry.jpg';
+    this.moodIcon = '/img/peticons/restless.jpg';
+    this.petStatus = 'Hungry and Restless';
+  }else if (this.loginDifferenceHungry < 10 && this.loginDifferenceRestless > 10) {
+    this.hungerIcon = '/img/peticons/full.jpg';
+    this.moodIcon = '/img/peticons/restless.jpg';
+    this.petStatus = 'Restless';
+  }else if (this.loginDifferenceHungry > (60*24) && this.loginDifferenceRestless > (60*24)){
+    this.moodIcon = '/img/peticons/dead.png';
+    this.hungerIcon = '/img/peticons/starved.jpg';
+  }else{
+    this.moodIcon = '/img/peticons/happy.jpg';
+    this.hungerIcon = '/img/peticons/full.jpg';
+    this.status = 'Happy';
+  }
   update(this, function(){
     fn(difference);
   });
+};
+
+User.prototype.resetLoginTime = function(activityName){
+  if(activityName === 'Cardio Exercise' || 'Weight Exercise'){
+    this.loginDifferenceHungry = 0;
+  }else if(activityName === 'Social'){
+    this.loginDifferenceRestless = 0;
+  }
 };

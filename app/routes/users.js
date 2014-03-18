@@ -9,9 +9,21 @@ exports.fresh = function(req, res){
   res.render('users/fresh', {title: 'Register User'});
 };
 
+exports.address = function(req, res){
+  User.findById(req.params.id, function(user){
+    user.addAddress(req.body.lat, req.body.lng, function(){
+      user.update(function(){
+        res.redirect('users/'+req.session.userId.toString());
+      });
+    });
+  });
+};
+
 exports.create = function(req, res){
   var user = new User(req.body);
-  user.register(function(){
+  var picpath = req.files.pic.path;
+  console.log('WWWWWWWWXXXXXXXX', picpath);
+  user.register(picpath, function(){
     if(user._id){
       User.findByEmailAndPassword(req.body.email, req.body.password, function(foundUser){
         if(foundUser){
@@ -38,8 +50,7 @@ exports.login = function(req, res){
 exports.authenticate = function(req, res){
   User.findByEmailAndPassword(req.body.email, req.body.password, function(user){
     if(user){
-      user.loginTime(function(difference){
-        console.log('yoyoyoyo'+difference);
+      user.loginTime(function(){
         req.session.regenerate(function(){
           req.session.userId = user._id;
           req.session.save(function(){
