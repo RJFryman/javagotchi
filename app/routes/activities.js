@@ -32,12 +32,20 @@ exports.show = function(req, res){
 };
 
 exports.create = function(req, res){
-  req.body.userId = req.session.userId;
+  if(req.user){
+    req.body.userId = req.user._id.toString();
+  }else{
+    req.body.userId = req.session.userId;
+  }
   var activity = new Activity(req.body);
   activity.insert(function(){
     Pet.findById(req.body.nodemonId, function(pet){
       pet.levelUp(req.body.category, req.body.duration, function(err){
-        res.send({userId:req.body.userId});
+        if(req.user){
+          res.send({userId:req.user._id.toString()});
+        }else{
+          res.send({userId:req.body.userId});
+        }
         //res.redirect('/activities/'+activity._id.toString());
       });
     });
