@@ -201,13 +201,13 @@ User.prototype.updateIcons = function(fn){
 };
 
 User.prototype.resetLoginTime = function(activityName, fn){
-  if(activityName === 'Cardio Exercise' || 'Weight Exercise'){
+  if(activityName === 'Cardio Exercise' || activityName === 'Weight Exercise'){
     this.loginDiffRest = 0;
     this.moodIcon = '/img/peticons/strong.jpg';
     this.petStatus = 'Feeling Strong';
   }else if(activityName === 'Social'){
     this.loginDiffHung = 0;
-    this.hungerIcon = '/img/peticons/full.jpg';
+    this.hungerIcon = '/img/peticons/full.png';
     this.petStatus = 'Feeling Social and Full';
   }
   update(this, function(){
