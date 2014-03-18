@@ -24,15 +24,20 @@ block content
             #pic(style='background-image:url('+showUser.pic+')')
         .small-9.columns
           h1#username= showUser.name
-          //if user._id.toString() === showUser._id.toString()
-            //div#nodebucksbox
-              //h4 #{showUser.nodeBucks.toString()}
-            //h4= showUser.loginDifference
+          if user._id.toString() === showUser._id.toString()
+            h4 LoginDiff
+              = showUser.loginDiff
+            h4 LoginDiffHung
+              = showUser.loginDiffHung
+            h4 LoginDiffRest
+              = showUser.loginDiffRest
+
       .row
         if showUser.coordinate
           h4#homeBox Home is at #{showUser.coordinate.join(', ')}
           #lat.hide= showUser.coordinate[0]
           #lng.hide= showUser.coordinate[1]
+      
       .row#petBox
         .small-12.columns
           if pets.length > 0
