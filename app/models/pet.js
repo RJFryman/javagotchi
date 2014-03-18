@@ -310,3 +310,25 @@ Pet.deleteById = function(id, fn){
   });
 };
 
+Pet.prototype.levelUp = function(activity, time, fn){
+  switch(activity){
+    case 'Social':
+      this.wisdom += (parseInt(time)/120);
+      break;
+    case 'Studying':
+      this.intelligence += (parseInt(time)/120);
+      break;
+    case 'Cardio Exercise':
+      this.constitution += (parseInt(time)/120);
+      break;
+    case 'Weight Exercise':
+      this.strength += (parseInt(time)/120);
+      break;
+    case 'Hobbies':
+      this.dexterity += (parseInt(time)/120);
+      break;
+  }
+  pets.update({_id:this._id}, this, function(err){
+    fn(err);
+  });
+};

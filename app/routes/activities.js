@@ -1,8 +1,9 @@
 'use strict';
 
 var Activity = require('../models/activity');
+var Pet = require('../models/pet');
 var Mongo = require('mongodb');
-//var User = require('../models/user');
+var Pet = require('../models/pet');
 //var _ = require('lodash');
 
 exports.index = function(req, res){
@@ -10,7 +11,15 @@ exports.index = function(req, res){
 };
 
 exports.new = function(req, res){
-  res.render('activities/new');
+  if(req.user){
+    Pet.findByUserId(req.user._id.toString(), function(pets){
+      res.render('activities/new', {pets:pets});
+    });
+  }else{
+    Pet.findByUserId(req.session.userId, function(pets){
+      res.render('activities/new', {pets:pets});
+    });
+  }
 };
 
 exports.show = function(req, res){
@@ -23,7 +32,11 @@ exports.create = function(req, res){
   req.body.userId = req.session.userId;
   var activity = new Activity(req.body);
   activity.insert(function(){
-    res.redirect('/activities/'+activity._id.toString());
+    Pet.findById(req.body.nodemonId, function(pet){
+      pet.levelUp(req.body.category, req.body.duration, function(err){
+        res.redirect('/activities/'+activity._id.toString());
+      });
+    });
   });
 };
 

@@ -8,7 +8,7 @@ block content
 
   .row
     .small-12.columns
-      form
+      form#activityform
         fieldset
           legend Add An Activity
           .row
@@ -18,35 +18,32 @@ block content
               label Date
               input(type='date', name='date')
               label Category
-              select
-                option Walking
-                option Running
-                option Socializing
-                option Hiking
-                option Swimming
-                option Programming
-                option Reading
-                option Eating
+              select(name='category')
+                option Social
+                option Studying
+                option Cardio Exercise
+                option Weight Exercise
+                option Hobbies
               label Activity Duration
-              select
-                option 5 minutes
-                option 30 minutes
-                option 1 hour
-                option 2 hours
-                option > 2 hours
+              input(type='number', name='duration', placeholder='15 minutes')
               label Description
               textarea#description(name='description', placeholder='Had a totally awesome time')
-              input(type='hidden', name='userId')
-              input(type='hidden', name='nodemonId')
+              input(type='hidden', name='userId')#inputuserId
+              select(name='nodemonId')#inputnodemonId
+                each pet in pets
+                  option(val='pet._id')= pet.name
+              input(type='hidden', name='currentweather')#inputweathercurrent
+              input(type='hidden', name='historicweather')#inputweatherhistoric
+              input(type='hidden', name='location')#inputlocation
             .small-4.columns.hide#weathersection
               label Add Weather Information To This Activity
               button#queryweather.radius.tiny Get Current Weather
               button#historicweather.radius.tiny Get Historic Weather
               #historicweathersearch.hide
                 label Select Date
-                input(type='date', name='date')#historicdate
+                input(type='date')#historicdate
                 label Enter Location
-                input(type='text', name='location', placeholder='TN/Nashville')#historicplace
+                input(type='text', placeholder='TN/Nashville')#historicplace
                 button#gethistoricweather.radius.tiny Get Weather
               #weatherdata
             .small-4.columns.hide#locationsection
@@ -55,9 +52,9 @@ block content
               button#otherlocation.radius.tiny Search Locations
               #locationsearch.hide
                 label Search Name
-                input(type='text', name='date', placeholder='Chipotle')#searchlocation
+                input(type='text', placeholder='Chipotle')#searchlocation
                 label Enter Location
-                input(type='text', name='location', placeholder='Dallas, TX')#citystate
+                input(type='text', placeholder='Dallas, TX')#citystate
                 button#searchfoursquare.radius.tiny Search Locations
               //select#venueselect
               #locationdata
@@ -67,8 +64,8 @@ block content
           .row
             .small-4.columns
               label &nbsp
-              button.radius.small Add Activity
+              button.radius.small#addactivity Add Activity
 
-block scripts
+block script
   script(src='/js/source/activity.js')
   script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD7SHoaSpx_SkDf3Qr3MSza5U3qtnEhATw&sensor=true')
