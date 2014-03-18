@@ -196,7 +196,7 @@ describe('User', function(){
         u2.loginDiffRest = 6;
         u2.update(function(){
           u2.updateIcons(function(){
-            expect(u2.petStatus).to.equal('Mildly Agitated');
+            expect(u2.petStatus).to.equal('Dead');
             expect(u2.loginDiffHung).to.equal(6);
             expect(u2.loginDiffRest).to.equal(6);
             done();

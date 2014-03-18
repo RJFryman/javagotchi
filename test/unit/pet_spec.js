@@ -197,7 +197,7 @@ describe('Pet', function(){
         expect(p1.constitution).to.equal(12);
         expect(p1.intelligence).to.equal(11);
         expect(p1.wisdom).to.equal(10);
-        expect(p1.image).to.equal('/img/pets/wizardRobot.jpg');
+        expect(p1.image).to.equal('/img/pets/wizardRobot.png');
         done();
       });
     });
