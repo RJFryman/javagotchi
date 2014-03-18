@@ -102,7 +102,7 @@ describe('Activities', function(){
         .field('description', 'Had a freaking blast')
         .field('nodemonId', p1._id.toString())
         .end(function(err, res){
-          expect(res.status).to.equal(302);
+          expect(res.status).to.equal(200);
           done();
         });
       });
