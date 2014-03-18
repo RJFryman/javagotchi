@@ -174,14 +174,45 @@ describe('User', function(){
     });
   });
 
-  describe('#loginTime', function(){
+  describe('#getLoginDiff', function(){
     it('should find the difference between login times and update lastLogin', function(done){
       var lastLogin = new Date();
       var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', lastLogin:lastLogin});
       u2.register('', function(){
-        u2.loginTime(function(difference){
+        u2.getLoginDiff(function(difference){
           expect(difference).to.not.equal(0);
           expect(u2.lastLogin).to.not.equal(lastLogin);
+          done();
+        });
+      });
+    });
+  });
+  
+  describe('#updateIcons', function(){
+    it('should change the pet icons and pet status', function(done){
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234'});
+      u2.register('', function(){
+        u2.loginDiffHung = 6;
+        u2.loginDiffRest = 6;
+        u2.update(function(){
+          u2.updateIcons(function(){
+            expect(u2.petStatus).to.equal('Mildly Agitated');
+            expect(u2.loginDiffHung).to.equal(6);
+            expect(u2.loginDiffRest).to.equal(6);
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('#resetLoginTime', function(){
+    it('should reset loginDiffHung or loginDiffRest to 0', function(done){
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', loginDiffHung:17, loginDiffRest:40});
+      u2.register('', function(){
+        u2.resetLoginTime('Cardio Exercise', function(){
+          expect(u2.loginDiffRest).to.equal(0);
+          expect(u2.loginDiffHung).to.equal(17);
           done();
         });
       });
