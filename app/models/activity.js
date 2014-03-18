@@ -14,7 +14,7 @@ function Activity(activity){
   this.dateCreated = activity.dateCreated ? activity.dateCreated : new Date();
   this.category = activity.category;
   this.description = activity.description;
-  this.nodemonId = Mongo.ObjectID(activity.nodemonId);
+  this.nodemonId = Mongo.ObjectID(activity.nodemonId.toString());
   this.duration = activity.duration;
   this.currentweather = activity.currentweather ? JSON.parse(activity.currentweather) : null;
   this.historicweather = activity.historicweather ? JSON.parse(activity.historicweather) : null;
