@@ -35,7 +35,7 @@ function load(app, fn){
                 var newUser = new User({});
                 newUser.facebookId = profile.id;
                 newUser.name = profile.displayName;
-                newUser.register(function(user){
+                newUser.register('', function(user){
                   return done(null, user);
                 });
               }

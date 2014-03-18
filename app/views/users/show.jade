@@ -11,7 +11,9 @@ block content
           tbody
             each activity in activities
               tr
-                td= activity.name
+                td
+                  a(href='/activities/'+activity._id.toString())= activity.name
+                td #{activity.date.getUTCMonth()+1}/#{activity.date.getUTCDate()}/#{activity.date.getUTCFullYear()}
       if user._id.toString() === showUser._id.toString()
         a(href='/activities/new')
           button Add an Activity!
