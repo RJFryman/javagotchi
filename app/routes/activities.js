@@ -3,6 +3,7 @@
 var Activity = require('../models/activity');
 var Pet = require('../models/pet');
 var Mongo = require('mongodb');
+var moment = require('moment');
 //var User = require('../models/user');
 var Pet = require('../models/pet');
 //var _ = require('lodash');
@@ -26,7 +27,7 @@ exports.new = function(req, res){
 exports.show = function(req, res){
   Activity.findById(req.params.id, function(activity){
     Pet.findById(activity.nodemonId.toString(), function(pet){
-      res.render('activities/show', {title: activity.name, activity:activity, pet:pet});
+      res.render('activities/show', {title: activity.name, activity:activity, pet:pet, moment:moment});
     });
   });
 };
