@@ -75,7 +75,7 @@ function assignImage(species, role, fn){
   }else if(species === 'Shark' && role === 'Wizard'){
     fn('/img/pets/wizardShark.jpg');
   }else if(species === 'Robot' && role === 'Wizard'){
-    fn('/img/pets/wizardRobot.jpg');
+    fn('/img/pets/wizardRobot.png');
   }
 }
 
