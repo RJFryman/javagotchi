@@ -11,26 +11,20 @@ block content
           tbody
             each activity in activities
               tr
-                td= activity.name
+                td
+                  a(href='/activities/'+activity._id.toString())= activity.name
+                td #{activity.date.getUTCMonth()+1}/#{activity.date.getUTCDate()}/#{activity.date.getUTCFullYear()}
       if user._id.toString() === showUser._id.toString()
         a(href='/activities/new')
           button Add an Activity!
     .small-9.columns
       .row
-        .small-6.columns
-          #pic(style='background-image:url('+showUser.pic+')')
-        .small-6.columns
-          form(method='post', action='/address/'+showUser._id.toString(), enctype='multipart/form-data')
-            label Add/Update Address
-            input(type='text', name='address', required=true)
-            input(type='hidden', name='lat')
-            input(type='hidden', name='lng')
-            button.radius.small#register Update Address
-          if showUser.coordinate
-            h4 Home is at #{showUser.coordinate.join(', ')}
-      .row
-        .small-12.columns
+        .small-4.columns
+          #picBox
+            #pic(style='background-image:url('+showUser.pic+')')
+        .small-8.columns
           h1#username= showUser.name
+<<<<<<< HEAD
           if user._id.toString() === showUser._id.toString()
             div#nodebucksbox
               h4 #{showUser.nodeBucks.toString()}
@@ -41,6 +35,17 @@ block content
             h4 LoginDiffRest
               = showUser.loginDiffRest
 
+=======
+          //if user._id.toString() === showUser._id.toString()
+            //div#nodebucksbox
+              //h4 #{showUser.nodeBucks.toString()}
+            //h4= showUser.loginDifference
+      .row
+        if showUser.coordinate
+          h4#homeBox Home is at #{showUser.coordinate.join(', ')}
+          #lat.hide= showUser.coordinate[0]
+          #lng.hide= showUser.coordinate[1]
+>>>>>>> master
       .row#petBox
         .small-12.columns
           if pets.length > 0
@@ -62,9 +67,18 @@ block content
           if pets.length === 0 && user._id.toString() === showUser._id.toString()
             a(href='/pets/new')
               button.alert#getPet Welcome to Nod&#233;Mon! Click here to get your first companion!
+      if user._id.toString() === showUser._id.toString()
+        .row
+          form(method='post', action='/address/'+showUser._id.toString(), enctype='multipart/form-data')
+            label Add/Update Address
+            input(type='text', name='address', required=true)
+            input(type='hidden', name='lat')
+            input(type='hidden', name='lng')
+            button.radius.small#register Update Address
 
 block less
   link(rel='stylesheet', href='/less/users.css')
 block script
   script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyB17gxJ33yXjzFoG-FkYyUmDANOjeBxyH8&sensor=true')
   script(src='/js/source/address.js')
+  script(src='/js/source/showuser.js')

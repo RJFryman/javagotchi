@@ -1,28 +1,78 @@
 extends ../shared/template
+block less
+  link(rel='stylesheet', href='/less/activityshow.css')
 
 block content
-  h1= title
+  h1 Activity
+
+  .row#topbox
+    .small-6.columns
+      h3= activity.name
+    .small-3.columns
+      h4= moment(activity.date).format('dddd')
+      h4= moment(activity.date).format('MMMM Do YYYY')
+    .small-3.columns
+      if(activity.currentweather)
+        img(src= activity.currentweather.icon)
+        .weather= activity.currentweather.description
+        .weather= activity.currentweather.feelslike
+      if(activity.historicweather)
+        .weather= activity.historicweather.meantemp
+        .weather= activity.historicweather.maxtemp
+        .weather= activity.historicweather.mintemp
+        .weather= activity.historicweather.precip
+  .row#middlebox
+    .small-4.columns
+      h5 Description
+      p= activity.description
+    .small-4.columns
+      h5 Activity Companion
+      div= pet.name
+      img(src= pet.image)
+    .small-4.columns
+      if(activity.location)
+        #map
+        table
+          tbody
+            td
+              img(src= activity.location.icon)
+            td
+              div#venuename= activity.location.venuename
+              div= activity.location.venueaddress
+              div= activity.location.venuecitystate
+  .row#bottombox
+    .small-3.columns
+      h5 Activity Category
+      p= activity.category
+    .small-3.columns
+      h5 Activity Duration
+      span= activity.duration + ' '
+      span minutes
+    .small-6.columns
 
   .row
     .small-12.columns
-      h1= activity.name
-      h1= activity.date
-      h1= activity.dateCreated
-      h1= activity.category
-      h1= activity.description
-      h1= activity.nodemonId
-      h1= activity.duration
-      h1= activity.currentweather.icon
-      h1= activity.currentweather.description
-      h1= activity.currentweather.feelslike
-      h1= activity.historicweather.meantemp
-      h1= activity.historicweather.maxtemp
-      h1= activity.historicweather.mintemp
-      h1= activity.historicweather.precip
-      h1= activity.location.icon
-      h1= activity.location.venuename
-      h1= activity.location.venueaddress
-      h1= activity.location.venuecitystate
-      h1= activity.location.venuelat
-      h1= activity.location.venuelng
+      //h1= activity.date
+      //h1= activity.dateCreated
+      //h1= activity.category
+      //h1= activity.description
+      //h1= activity.nodemonId
+      //h1= activity.duration
+      //h1= activity.currentweather.icon
+      //h1= activity.currentweather.description
+      //h1= activity.currentweather.feelslike
+      //h1= activity.historicweather.meantemp
+      //h1= activity.historicweather.maxtemp
+      //h1= activity.historicweather.mintemp
+      //h1= activity.historicweather.precip
+      //h1= activity.location.icon
+      //h1= activity.location.venuename
+      //h1= activity.location.venueaddress
+      //h1= activity.location.venuecitystate
+    if(activity.location)
+      #lat.hide= activity.location.lat
+      #lng.hide= activity.location.lng
 
+block script
+  script(src='/js/source/showactivity.js')
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD7SHoaSpx_SkDf3Qr3MSza5U3qtnEhATw&sensor=true')

@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 var app = require('../../app/app');
 var expect = require('chai').expect;
 var User, Activity, Pet;
-var u1, u2, u3, a1, cookie;
+var u1, u2, u3, a1, p1, cookie;
 
 describe('Activities', function(){
   before(function(done){
@@ -40,15 +40,18 @@ describe('Activities', function(){
         u1.register('',function(){
           u2.register('',function(){
             u3.register('',function(){
-              a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:'12345678901234567890abcd'});
-              a1.insert(function(err){
-                request(app)
-                .post('/login/local')
-                .field('email', 'adam@nomail.com')
-                .field('password', '1234')
-                .end(function(err, res){
-                  cookie = res.headers['set-cookie'];
-                  done();
+              p1 = new Pet({name: 'Winky', species:'Robot', role:'Wizard'});
+              p1.insert(function(){
+                a1 = new Activity({name:'Swimming with Sharky', userId:u1._id.toString(), date:'2014-03-14', category:'swimming', description:'great day at the pool with my nodemon', nodemonId:p1._id.toString()});
+                a1.insert(function(err){
+                  request(app)
+                  .post('/login/local')
+                  .field('email', 'adam@nomail.com')
+                  .field('password', '1234')
+                  .end(function(err, res){
+                    cookie = res.headers['set-cookie'];
+                    done();
+                  });
                 });
               });
             });
@@ -89,22 +92,19 @@ describe('Activities', function(){
 
   describe('POST /activities', function(){
     it('should create an activity and redirect to the activities show page, plus level up the pet', function(done){
-      var p1 = new Pet({name: 'Winky', species:'Robot', role:'Wizard'});
-      p1.insert(function(){
-        request(app)
-        .post('/activities')
-        .set('cookie', cookie)
-        .field('name', 'Skydiving with my wizard friend')
-        .field('userId', u1._id.toString())
-        .field('date', '2014-03-15')
-        .field('category', 'Social')
-        .field('duration', '60')
-        .field('description', 'Had a freaking blast')
-        .field('nodemonId', p1._id.toString())
-        .end(function(err, res){
-          expect(res.status).to.equal(200);
-          done();
-        });
+      request(app)
+      .post('/activities')
+      .set('cookie', cookie)
+      .field('name', 'Skydiving with my wizard friend')
+      .field('userId', u1._id.toString())
+      .field('date', '2014-03-15')
+      .field('category', 'Social')
+      .field('duration', '60')
+      .field('description', 'Had a freaking blast')
+      .field('nodemonId', p1._id.toString())
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        done();
       });
     });
   });
@@ -126,6 +126,7 @@ describe('Activities', function(){
       .put('/activities/' + id)
       .set('cookie', cookie)
       .field('name', 'Falling Out Of An Airplane')
+      .field('nodemonId', '12345678901234567890abcd')
       .expect(302, done);
     });
   });

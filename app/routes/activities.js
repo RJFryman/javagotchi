@@ -4,6 +4,7 @@ var Activity = require('../models/activity');
 var Pet = require('../models/pet');
 var Mongo = require('mongodb');
 var User = require('../models/user');
+var moment = require('moment');
 var Pet = require('../models/pet');
 //var _ = require('lodash');
 
@@ -26,21 +27,28 @@ exports.new = function(req, res){
 exports.show = function(req, res){
   Activity.findById(req.params.id, function(activity){
     Pet.findById(activity.nodemonId.toString(), function(pet){
-      res.render('activities/show', {title: activity.name, activity:activity, pet:pet});
+      res.render('activities/show', {title: activity.name, activity:activity, pet:pet, moment:moment});
     });
   });
 };
 
 exports.create = function(req, res){
-  req.body.userId = req.session.userId;
+  if(req.user){
+    req.body.userId = req.user._id.toString();
+  }else{
+    req.body.userId = req.session.userId;
+  }
   var activity = new Activity(req.body);
   activity.insert(function(){
     User.findById(req.session.userId, function(user){
       user.resetLoginTime(req.body.category, function(){
         Pet.findById(req.body.nodemonId, function(pet){
           pet.levelUp(req.body.category, req.body.duration, function(err){
-            res.send({userId:req.body.userId});
-        //res.redirect('/activities/'+activity._id.toString());
+            if(req.user){
+              res.send({userId:req.user._id.toString()});
+            }else{
+              res.send({userId:req.body.userId});
+            }
           });
         });
       });
