@@ -193,8 +193,8 @@ User.prototype.loginTime = function(fn){
 
 User.prototype.resetLoginTime = function(activityName){
   if(activityName === 'Cardio Exercise' || 'Weight Exercise'){
-    this.loginDifferenceHungry = 0;
+    this.loginDifferenceHung = 0;
   }else if(activityName === 'Social'){
-    this.loginDifferenceRestless = 0;
+    this.loginDifferenceRest = 0;
   }
 };
