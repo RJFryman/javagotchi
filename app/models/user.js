@@ -177,10 +177,14 @@ User.prototype.getLoginDiff = function(fn){
 };
 
 User.prototype.updateIcons = function(fn){
-  if(this.loginDiffHung > 5 && this.loginDiffRest > 5){
+  if((this.loginDiffHung > 2 && this.loginDiffHung < 4) &&(this.loginDiffRest > 2 && this.loginDiffRest < 4)){
     this.hungerIcon = '/img/peticons/hungry.jpg';
     this.moodIcon = '/img/peticons/restless.jpg';
     this.petStatus = 'Mildly Agitated';
+  }else if(this.loginDiffHung > 4 && this.loginDiffRest > 4){
+    this.hungerIcon = '/img/peticons/starved.jpg';
+    this.moodIcon = '/img/peticons/dead.png';
+    this.petStatus = 'Dead';
   }else{
     this.hungerIcon = '/img/peticons/full.png';
     this.moodIcon = '/img/peticons/happy.jpg';
@@ -194,8 +198,12 @@ User.prototype.updateIcons = function(fn){
 User.prototype.resetLoginTime = function(activityName, fn){
   if(activityName === 'Cardio Exercise' || 'Weight Exercise'){
     this.loginDiffRest = 0;
+    this.moodIcon = '/img/peticons/strong.jpg';
+    this.petStatus = 'Feeling Strong';
   }else if(activityName === 'Social'){
     this.loginDiffHung = 0;
+    this.hungerIcon = '/img/peticons/full.jpg';
+    tihs.petStatus = 'Feeling Social and Full';
   }
   update(this, function(){
     fn();
