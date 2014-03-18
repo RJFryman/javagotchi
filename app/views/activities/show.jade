@@ -12,9 +12,15 @@ block content
       h4= moment(activity.date).format('dddd')
       h4= moment(activity.date).format('MMMM Do YYYY')
     .small-3.columns
-      img(src= activity.currentweather.icon)
-      #weather= activity.currentweather.description
-      #weather= activity.currentweather.feelslike
+      if activity.currentweather
+        img(src= activity.currentweather.icon)
+        .weather= activity.currentweather.description
+        .weather= activity.currentweather.feelslike
+      if activity.historicweather
+        .weather= activity.historicweather.meantemp
+        .weather= activity.historicweather.maxtemp
+        .weather= activity.historicweather.mintemp
+        .weather= activity.historicweather.precip
   .row#middlebox
     .small-4.columns
       h5 Description
