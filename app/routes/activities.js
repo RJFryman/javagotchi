@@ -25,7 +25,9 @@ exports.new = function(req, res){
 
 exports.show = function(req, res){
   Activity.findById(req.params.id, function(activity){
-    res.render('activities/show', {title: activity.name, activity:activity});
+    Pet.findById(activity.nodemonId.toString(), function(pet){
+      res.render('activities/show', {title: activity.name, activity:activity, pet:pet});
+    });
   });
 };
 
@@ -35,7 +37,8 @@ exports.create = function(req, res){
   activity.insert(function(){
     Pet.findById(req.body.nodemonId, function(pet){
       pet.levelUp(req.body.category, req.body.duration, function(err){
-        res.redirect('/activities/'+activity._id.toString());
+        res.send({userId:req.body.userId});
+        //res.redirect('/activities/'+activity._id.toString());
       });
     });
   });
