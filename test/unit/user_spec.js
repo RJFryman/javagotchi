@@ -30,8 +30,8 @@ describe('User', function(){
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
       fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile2));
       global.nss.db.dropDatabase(function(err, result){
-        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0'});
-        u1.register(function(){
+        var u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234'});
+        u1.register('', function(){
           done();
         });
       });
@@ -51,11 +51,10 @@ describe('User', function(){
 
   describe('register', function(){
     it('should register user', function(done){
-      var u1 = new User({name: 'Sam', email:'robert.fryman@gmail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
-      u1.register(function(){
+      var u1 = new User({name: 'Sam', email:'robert.fryman@gmail.com', password:'1234'});
+      u1.register('', function(){
         expect(u1.email).to.equal('robert.fryman@gmail.com');
         expect(u1.password).to.have.length(60);
-        expect(u1.nodeBucks).to.equal(5);
         expect(u1.name).to.equal('Sam');
         expect(u1._id.toString()).to.have.length(24);
         done();
@@ -63,10 +62,10 @@ describe('User', function(){
     });
 
     it('should not register a user to the database for duplicate email', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
-      var u2 = new User({name: 'Sam', email:'sami1@nomail.com', password:'1234', nodeBucks:'5', lat:'0', log:'0'});
-      u1.register(function(){
-        u2.register(function(){
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234'});
+      var u2 = new User({name: 'Sam', email:'sami1@nomail.com', password:'1234'});
+      u1.register('', function(){
+        u2.register('', function(){
           expect(u1.password).to.have.length(60);
           expect(u1._id.toString()).to.have.length(24);
           expect(u2._id).to.not.be.ok;
@@ -78,8 +77,8 @@ describe('User', function(){
 
   describe('#setHome', function(){
     it('should set the home coordinates of the user', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
-      u1.register(function(){
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234'});
+      u1.register('', function(){
         u1.setHome('0', '0', function(){
           expect(u1.home).to.deep.equal([0, 0]);
           done();
@@ -90,8 +89,8 @@ describe('User', function(){
 
   describe('deleteById', function(){
     it('should delete a user', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
-      u1.register(function(){
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234'});
+      u1.register('', function(){
         User.deleteById(u1._id.toString(), function(count){
           expect(count).to.equal(1);
           done();
@@ -104,8 +103,8 @@ describe('User', function(){
 
   describe('.findById', function(){
     it('should find a user by id', function(done){
-      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234', lat: '0', lng:'0'});
-      u1.register(function(){
+      var u1 = new User({name: 'Sam', email:'sam@nomail.com', password:'1234'});
+      u1.register('', function(){
         User.findById(u1._id.toString(), function(record){
           expect(u1.email).to.equal('sam@nomail.com');
           expect(u1.password).to.not.equal('1234');
@@ -119,8 +118,8 @@ describe('User', function(){
 
   describe('.findByFacebookId', function(){
     it('should find a user', function(done){
-      var u1 = new User({facebookId:'1234', name: 'Sam', email:'sam@nomail.com', password:'1234', lat: '0', lng:'0'});
-      u1.register(function(){
+      var u1 = new User({facebookId:'1234', name: 'Sam', email:'sam@nomail.com', password:'1234'});
+      u1.register('', function(){
         User.findByFacebookId('1234', function(record){
           expect(record.name).to.equal('Sam');
           done();
@@ -153,8 +152,8 @@ describe('User', function(){
 
   describe('.findAll', function(){
     it('should all users in the db', function(done){
-      var u2 = new User({name: 'Sam', email:'adam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
-      u2.register(function(){
+      var u2 = new User({name: 'Sam', email:'adam@nomail.com', password:'1234'});
+      u2.register('', function(){
         User.findAll(function(users){
           expect(users.length).to.equal(2);
           done();
@@ -165,8 +164,8 @@ describe('User', function(){
 
   describe('.findByName', function(){
     it('should find users by name in the db', function(done){
-      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', nodeBucks:'5', lat:'0', lng:'0'});
-      u2.register(function(){
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234'});
+      u2.register('', function(){
         User.findByName('Adam', function(users){
           expect(users.name).to.equal('Adam');
           done();
@@ -178,8 +177,8 @@ describe('User', function(){
   describe('#loginTime', function(){
     it('should find the difference between login times and update lastLogin', function(done){
       var lastLogin = new Date();
-      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', lastLogin:lastLogin, nodeBucks:'5', lat:'0', lng:'0'});
-      u2.register(function(){
+      var u2 = new User({name: 'Adam', email:'adam@nomail.com', password:'1234', lastLogin:lastLogin});
+      u2.register('', function(){
         u2.loginTime(function(difference){
           expect(difference).to.not.equal(0);
           expect(u2.lastLogin).to.not.equal(lastLogin);

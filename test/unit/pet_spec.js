@@ -20,8 +20,8 @@ describe('Pet', function(){
 
   beforeEach(function(done){
     global.nss.db.dropDatabase(function(err, result){
-      u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234', nodeBucks:'5',lat:'0', lng:'0'});
-      u1.register(function(){
+      u1 = new User({name: 'Samuel', email:'sami1@nomail.com', password:'1234'});
+      u1.register('', function(){
         done();
       });
     });
