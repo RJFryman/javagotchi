@@ -4,7 +4,7 @@ block less
  link(rel='stylesheet', href='/less/pets.css')
 
 block pet
-  .panel.text-center#name
+  #wrapper
     h1= pet.name.toUpperCase()
 
   .row
@@ -57,4 +57,40 @@ block pet
       p= pet.wisdom
     .small-2.columns.text-center
 
-
+    .row#petBox
+      .small-3.columns
+        div#image
+          img(src= pet.image)
+      .small-9.columns
+        .row
+          .small-6.columns
+            h2 Owner: 
+              a(href='/users/'+pet.userId)
+                = owner.name
+          .small-6.columns
+            h2 Status: 
+              = pet.status
+        .row
+          .small-6.columns
+            h2 Species: 
+              = pet.species
+          .small-6.columns
+            h2 Role: 
+              = pet.role
+        .row
+          .statBox
+            h3.stats Strength
+            p= pet.strength
+          .statBox
+            h3.stats Dexterity
+            p= pet.dexterity
+          .statBox
+            h3.stats Constitution
+            p= pet.constitution
+          .statBox
+            h3.stats Intelligence
+            p= pet.intelligence
+          .statBox
+            h3.stats Wisdom
+            p= pet.wisdom
+>>>>>>> 95cf33cd041a9f429644ff022a5d8758e740af5c

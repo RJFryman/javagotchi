@@ -2,10 +2,16 @@
 
 var Pet = require('../models/pet');
 var User = require('../models/user');
+var _ = require('lodash');
 
 exports.index = function(req, res){
   Pet.findAll(function(pets){
-    res.render('pets/index', {title:'Companions', pets:pets});
+    var sortedPets = _.sortBy(pets, function(pet){
+      var sum = pet.strength + pet.intelligence + pet.wisdom + pet.constitution + pet.dexterity;
+      console.log(sum);
+      return sum;
+    });
+    res.render('pets/index', {pets:sortedPets});
   });
 };
 

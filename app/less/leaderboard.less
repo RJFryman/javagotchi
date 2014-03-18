@@ -1,0 +1,27 @@
+@import url(http://fonts.googleapis.com/css?family=Griffy);
+@import url(http://fonts.googleapis.com/css?family=Della+Respira);
+@rand1: `Math.floor(Math.random()*256)`;
+@rand2: `Math.floor(Math.random()*256)`;
+@rand3: `Math.floor(Math.random()*256)`;
+
+#wrapper h1{
+  font-family: 'Griffy', cursive;
+  text-align: center;
+  font-size: 4em;
+  color: rgb(@rand1, @rand2, @rand3);
+}
+
+#leaderboard{
+  width: 70%;
+  margin: auto;
+  font-family: 'Della Respira', serif;
+}
+
+#leaderboard td:nth-child(1){
+  width: 10%;
+}
+
+.petIcon{
+  height: 50px;
+  border-radius: 10px;
+}

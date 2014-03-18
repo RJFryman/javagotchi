@@ -1,34 +1,37 @@
-@import url(http://fonts.googleapis.com/css?family=Metal+Mania);
-@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic);
-@bg-color: #cccccc;
+@import url(http://fonts.googleapis.com/css?family=Griffy);
+@import url(http://fonts.googleapis.com/css?family=Della+Respira);
+@rand1: `Math.floor(Math.random()*256)`;
+@rand2: `Math.floor(Math.random()*256)`;
+@rand3: `Math.floor(Math.random()*256)`;
 
-h1{
-  color: white !important;
+#wrapper{
+  margin: auto;
+  padding: 10px;
 }
 
-legend, thead{
-  padding: 5px !important;
-  background-color: black !important;
-  color: white !important;
+#wrapper h1{
+  font-family: 'Griffy', cursive;
+  text-align: center;
+  font-size: 4em;
+  color: rgb(@rand1, @rand2, @rand3);
 }
 
-th{
-  color: white !important;
-  font-family: 'Ubuntu Mono', sans-serif;
+h2, h3, p{
+  font-family: 'Della Respira', serif;
+  margin-top: 0px;
 }
 
-td img{
-  width: 50px;
+h2{
+  font-size: 1.5em;
 }
 
-#name{
-  background-color: black;
-  color: white;
-  border: 2px solid black;
+h3, p{
+  text-align: center;
 }
 
-button{
-  background-color: black !important;
+.statBox{
+  width: 20%;
+  float: left;
 }
 
 .peticon{
@@ -38,8 +41,14 @@ button{
 
 img{
   border-radius: 10px;
+
+#petBox{
+  -webkit-box-shadow: 0px 7px 5px -2px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    0px 7px 5px -2px rgba(50, 50, 50, 0.75);
+  box-shadow:         0px 7px 5px -2px rgba(50, 50, 50, 0.75);
+>>>>>>> 95cf33cd041a9f429644ff022a5d8758e740af5c
 }
 
-.stats{
-  text-decoration: underline;
+button{
+  margin: 0px;
 }
