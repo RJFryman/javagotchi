@@ -30,12 +30,15 @@ function load(app, fn){
           process.nextTick(function(){
             User.findByFacebookId(profile.id, function(user){
               if(user){
-                return done(null, user);
+                user.getLoginDiff(function(){
+                  user.updateIcons(function(){
+                    return done(null, user);
+                  });
+                });
               }else{
                 var newUser = new User({});
                 newUser.facebookId = profile.id;
                 newUser.name = profile.displayName;
-                console.log(profile.photos[0]);
                 newUser.register(profile.photos[0].value, function(user){
                   return done(null, user);
                 });

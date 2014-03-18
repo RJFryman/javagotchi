@@ -40,15 +40,16 @@ exports.create = function(req, res){
   }
   var activity = new Activity(req.body);
   activity.insert(function(){
-    User.findById(req.session.userId, function(user){
+    if(req.user){
+      var id = req.user._id.toString();
+    }else{
+      var id = req.session.userId;
+    }
+    User.findById(id, function(user){
       user.resetLoginTime(req.body.category, function(){
         Pet.findById(req.body.nodemonId, function(pet){
           pet.levelUp(req.body.category, req.body.duration, function(err){
-            if(req.user){
-              res.send({userId:req.user._id.toString()});
-            }else{
-              res.send({userId:req.body.userId});
-            }
+            res.send({userId:id});
           });
         });
       });
