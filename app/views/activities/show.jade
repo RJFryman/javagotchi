@@ -3,3 +3,26 @@ extends ../shared/template
 block content
   h1= title
 
+  .row
+    .small-12.columns
+      h1= activity.name
+      h1= activity.date
+      h1= activity.dateCreated
+      h1= activity.category
+      h1= activity.description
+      h1= activity.nodemonId
+      h1= activity.duration
+      h1= activity.currentweather.icon
+      h1= activity.currentweather.description
+      h1= activity.currentweather.feelslike
+      h1= activity.historicweather.meantemp
+      h1= activity.historicweather.maxtemp
+      h1= activity.historicweather.mintemp
+      h1= activity.historicweather.precip
+      h1= activity.location.icon
+      h1= activity.location.venuename
+      h1= activity.location.venueaddress
+      h1= activity.location.venuecitystate
+      h1= activity.location.venuelat
+      h1= activity.location.venuelng
+

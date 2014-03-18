@@ -9,6 +9,9 @@ block content
           thead
             th(colspan='2') Activities
           tbody
+            each activity in activities
+              tr
+                td= activity.name
       if user._id.toString() === showUser._id.toString()
         a(href='/activities/new')
           button Add an Activity!
