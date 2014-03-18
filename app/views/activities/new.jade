@@ -29,9 +29,9 @@ block content
               label Description
               textarea#description(name='description', placeholder='Had a totally awesome time')
               input(type='hidden', name='userId')#inputuserId
-              select(name='nodemonId')#inputnodemonId
+              select#inputnodemonId
                 each pet in pets
-                  option(val='pet._id')= pet.name
+                  option(data-id= pet._id.toString())= pet.name
               input(type='hidden', name='currentweather')#inputweathercurrent
               input(type='hidden', name='historicweather')#inputweatherhistoric
               input(type='hidden', name='location')#inputlocation

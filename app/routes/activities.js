@@ -34,7 +34,8 @@ exports.create = function(req, res){
   activity.insert(function(){
     Pet.findById(req.body.nodemonId, function(pet){
       pet.levelUp(req.body.category, req.body.duration, function(err){
-        res.redirect('/activities/'+activity._id.toString());
+        res.send({userId:req.body.userId});
+        //res.redirect('/activities/'+activity._id.toString());
       });
     });
   });
