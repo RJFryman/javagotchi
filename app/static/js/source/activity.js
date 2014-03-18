@@ -190,6 +190,8 @@
 
   function addActivity(event){
     var data = $('#activityform').serialize();
+    var nodemonId = $('#inputnodemonId').children(':selected').attr('data-id');
+    data = data + '&nodemonId=' + nodemonId;
     console.log('SERIALIZED FORM DATA:');
     console.log(data);
     var url = '/activities';
@@ -201,6 +203,7 @@
 
   function successfunc(data){
     console.log('DATA RETURNED FROM THE SERVER:');
+    window.location = '/users/' + data.userId;
     console.log(data);
   }
 
