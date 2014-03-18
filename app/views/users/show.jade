@@ -31,7 +31,13 @@ block content
           if user._id.toString() === showUser._id.toString()
             div#nodebucksbox
               h4 #{showUser.nodeBucks.toString()}
-            h4= showUser.loginDifference 
+            h4 LoginDiff
+              = showUser.loginDiff
+            h4 LoginDiffHung
+              = showUser.loginDiffHung
+            h4 LoginDiffRest
+              = showUser.loginDiffRest
+
       .row#petBox
         .small-12.columns
           if pets.length > 0

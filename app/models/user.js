@@ -30,7 +30,9 @@ function User(user){
   this.loginDiff = user.loginDiff? user.loginDifference : 0;
   this.loginDiffHung = user.loginDiffHung? user.loginDiffHung : 0;
   this.loginDiffRest = user.loginDiffRest? user.loginDiffRest : 0;
-  this.petStatus = user.petStatus? user.petStatus : 'Something isnt working';
+  this.petStatus = user.petStatus? user.petStatus : 'Happy';
+  this.moodIcon = user.moodIcon? user.moodIcon : '/img/peticons/happy.jpg';
+  this.hungerIcon = user.hungerIcon? user.hungerIcon : '/img/peticons/full.png';
 }
 
 User.prototype.register = function(picpath, fn){
@@ -166,7 +168,7 @@ User.prototype.getLoginDiff = function(fn){
   var newLogin = new Date();
   var difference = (newLogin.getTime() - this.lastLogin.getTime())/60000;
   this.loginDiff += difference;
-  this.loginDiffHungry += difference;
+  this.loginDiffHung += difference;
   this.loginDiffRest += difference;
   this.lastLogin = newLogin;
   update(this, function(){
@@ -180,7 +182,7 @@ User.prototype.updateIcons = function(fn){
     this.moodIcon = '/img/peticons/restless.jpg';
     this.petStatus = 'Mildly Agitated';
   }else{
-    this.hungerIcon = '/img/peticons/full.jpg';
+    this.hungerIcon = '/img/peticons/full.png';
     this.moodIcon = '/img/peticons/happy.jpg';
     this.petStatus = 'Happy';
   }

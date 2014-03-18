@@ -3,7 +3,7 @@
 var Activity = require('../models/activity');
 var Pet = require('../models/pet');
 var Mongo = require('mongodb');
-//var User = require('../models/user');
+var User = require('../models/user');
 var Pet = require('../models/pet');
 //var _ = require('lodash');
 
@@ -33,9 +33,13 @@ exports.create = function(req, res){
   req.body.userId = req.session.userId;
   var activity = new Activity(req.body);
   activity.insert(function(){
-    Pet.findById(req.body.nodemonId, function(pet){
-      pet.levelUp(req.body.category, req.body.duration, function(err){
-        res.redirect('/activities/'+activity._id.toString());
+    User.findById(req.session.userId, function(user){
+      user.resetLoginTime(req.body.category, function(){
+        Pet.findById(req.body.nodemonId, function(pet){
+          pet.levelUp(req.body.category, req.body.duration, function(err){
+            res.redirect('/activities/'+activity._id.toString());
+          });
+        });
       });
     });
   });

@@ -50,11 +50,13 @@ exports.login = function(req, res){
 exports.authenticate = function(req, res){
   User.findByEmailAndPassword(req.body.email, req.body.password, function(user){
     if(user){
-      user.loginTime(function(){
-        req.session.regenerate(function(){
-          req.session.userId = user._id;
-          req.session.save(function(){
-            res.redirect('/users/'+req.session.userId.toString());
+      user.getLoginDiff(function(){
+        user.updateIcons(function(){
+          req.session.regenerate(function(){
+            req.session.userId = user._id;
+            req.session.save(function(){
+              res.redirect('/users/'+req.session.userId.toString());
+            });
           });
         });
       });
