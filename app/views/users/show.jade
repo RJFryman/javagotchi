@@ -31,6 +31,8 @@ block content
       .row
         if showUser.coordinate
           h4#homeBox Home is at #{showUser.coordinate.join(', ')}
+          #lat.hide= showUser.coordinate[0]
+          #lng.hide= showUser.coordinate[1]
       .row#petBox
         .small-12.columns
           if pets.length > 0
@@ -52,16 +54,18 @@ block content
           if pets.length === 0 && user._id.toString() === showUser._id.toString()
             a(href='/pets/new')
               button.alert#getPet Welcome to Nod&#233;Mon! Click here to get your first companion!
-      .row
-        form(method='post', action='/address/'+showUser._id.toString(), enctype='multipart/form-data')
-          label Add/Update Address
-          input(type='text', name='address', required=true)
-          input(type='hidden', name='lat')
-          input(type='hidden', name='lng')
-          button.radius.small#register Update Address
+      if user._id.toString() === showUser._id.toString()
+        .row
+          form(method='post', action='/address/'+showUser._id.toString(), enctype='multipart/form-data')
+            label Add/Update Address
+            input(type='text', name='address', required=true)
+            input(type='hidden', name='lat')
+            input(type='hidden', name='lng')
+            button.radius.small#register Update Address
 
 block less
   link(rel='stylesheet', href='/less/users.css')
 block script
   script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyB17gxJ33yXjzFoG-FkYyUmDANOjeBxyH8&sensor=true')
   script(src='/js/source/address.js')
+  script(src='/js/source/showuser.js')
