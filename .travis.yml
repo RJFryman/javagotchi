@@ -9,4 +9,4 @@ after_script:
 
 env:
   global:
-     secure: "DTCutTZ9ys3qrVYjMur31DWlzNTqZ1rNrJyz1X1B8EegeUgEnhAGcSvmF/6iys4cMAdUh9d5KjeW38O3GfoxynAijPtGqSh2KP63apDbePY/kv/Y0x9Z/8UkgcTSAXrCgFTjqkjSF5Jorl6qviIEfs9rezHJN6wW9hLFT4qVthM="
+     secure: "VySvS5qxuWMZW0aG8auGEHZD899kWxbG9WZhGuH8IYkHpmz7rir1IgEfS4yPWDqanmgL9fWuV852UkG/GOHxZWtTdOt0xkbEMlHwz/1B8EK7WP2ZVtDSOkZoqsrmjmz7BxRXGiocgsK+V6hJ5BOyx/PncZKQb7WRdLowDQSDY4Y="
