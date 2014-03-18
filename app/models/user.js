@@ -8,6 +8,7 @@ var path = require('path');
 var fs = require('fs');
 var Mongo = require('mongodb');
 var _ = require('lodash');
+var request = require('request');
 
 /* ---------------------------------- *
  * User
@@ -62,8 +63,12 @@ function addPic(oldpath, fn){
   var filename = path.basename(oldpath);
   var abspath = __dirname + '/../static';
   var relpath = '/img/users/' + filename;
-  console.log(oldpath);
-  fs.renameSync(oldpath, abspath+relpath);
+
+  if(oldpath.slice(0,5)==='https'){
+    request(oldpath).pipe(fs.createWriteStream(abspath+relpath));
+  }else{
+    fs.renameSync(oldpath, abspath+relpath);
+  }
 
   fn(relpath);
 }
