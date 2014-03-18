@@ -22,7 +22,6 @@ exports.address = function(req, res){
 exports.create = function(req, res){
   var user = new User(req.body);
   var picpath = req.files.pic.path;
-  console.log('WWWWWWWWXXXXXXXX', picpath);
   user.register(picpath, function(){
     if(user._id){
       User.findByEmailAndPassword(req.body.email, req.body.password, function(foundUser){
