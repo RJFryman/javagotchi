@@ -1,7 +1,19 @@
-@bg-color: #cccccc;
+@import url(http://fonts.googleapis.com/css?family=Griffy);
+@import url(http://fonts.googleapis.com/css?family=Della+Respira);
+@rand1: `Math.floor(Math.random()*256)`;
+@rand2: `Math.floor(Math.random()*256)`;
+@rand3: `Math.floor(Math.random()*256)`;
 
 body{
-  background-color: @bg-color;
+  font-family: 'Della Respira', serif;
+}
+
+h1{
+  font-family: 'Griffy', cursive;
+  text-align: center;
+  font-size: 4em;
+  color: rgb(@rand1, @rand2, @rand3);
+  margin: 0px;
 }
 
 .icon{
@@ -44,4 +56,8 @@ body{
 textarea{
   height: 150px;
   width: 100%;
+}
+
+button{
+  margin: 0px;
 }

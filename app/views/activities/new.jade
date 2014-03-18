@@ -4,13 +4,13 @@ block less
   link(rel='stylesheet', href='/less/activity.css')
 
 block content
-  h1= title
+  h1 New Activity
 
   .row
     .small-12.columns
       form#activityform
         fieldset
-          legend Add An Activity
+          legend Add an Activity
           .row
             .small-4.columns
               label Title
@@ -36,7 +36,7 @@ block content
               input(type='hidden', name='historicweather')#inputweatherhistoric
               input(type='hidden', name='location')#inputlocation
             .small-4.columns.hide#weathersection
-              label Add Weather Information To This Activity
+              label Add Weather Information to This Activity
               button#queryweather.radius.tiny Get Current Weather
               button#historicweather.radius.tiny Get Historic Weather
               #historicweathersearch.hide
@@ -47,7 +47,7 @@ block content
                 button#gethistoricweather.radius.tiny Get Weather
               #weatherdata
             .small-4.columns.hide#locationsection
-              label Add A Location To This Activity
+              label Add a Location to This Activity
               button#queryfoursquare.radius.tiny Get Current Location
               button#otherlocation.radius.tiny Search Locations
               #locationsearch.hide
