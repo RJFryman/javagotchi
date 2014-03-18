@@ -7,6 +7,14 @@ block pet
   #wrapper
     h1= pet.name.toUpperCase()
 
+  .row
+    .small-3.columns.text-center
+      div Mood:
+        img.peticon(src= owner.moodIcon)
+    .small-3.columns.text-center
+      div Hunger:
+        img.peticon(src= owner.hungerIcon)
+
     .row#petBox
       .small-3.columns
         div#image
