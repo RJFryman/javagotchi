@@ -81,7 +81,11 @@ function addPic(oldpath, fn){
 User.findById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   users.findOne({_id:_id}, function(err, record){
-    fn(_.extend(record, User.prototype));
+    if(record){
+      fn(_.extend(record, User.prototype));
+    }else{
+      fn(null);
+    }
   });
 };
 
